@@ -43,9 +43,11 @@
             padding-inline-start: 0px;
 
         }
-.card ul li::marker{
-    color: blue;
-}
+
+        .card ul li::marker {
+            color: blue;
+        }
+
         .card li {
             line-height: 2;
             width: 45%;
@@ -57,20 +59,30 @@
             padding-right: 10%;
         }
 
-        .carda a{ 
-            text-underline-offset: 3px;
-color: #00f;
-        }
 
-        .card img {
-            height: 80%
+
+
+        .carda a:link,a:visited{color: blue;}
+        
+
+        .carda {
+            color: #00f;
+
+        }
+        .carda a {
+            text-decoration: none;
+        }
+        .card a:hover .txt{
+          padding-right: 25px;
+            transition: padding 1s;
+        }
+        .carda a .txt {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+
         }
 
         .cardlist .card.card:nth-child(2n) {
-            flex-direction: row-reverse;
-        }
-
-        .card_list.card:nth-child(2N) {
             flex-direction: row-reverse;
         }
 
@@ -121,7 +133,7 @@ color: #00f;
     </div>
     <div class="cardlist">
         <div class="card">
-            <div>
+            <div class="textbox">
                 <div class="text">
                     <h3>免寫程式、多款版型<br> 輕鬆打造全能電商網站</h3>
                     <p>不會寫程式也能輕鬆架設品牌電商官網！任何產業都能找到合適的專業設計版型，以滑鼠拖曳就能完成網頁編輯，讓架設網站就像堆積木一樣簡單。</p>
@@ -139,15 +151,17 @@ color: #00f;
                     <li>開放 HTML／CSS 編輯
                     </li>
                 </ul>
-                <div class="carda"><a href="#">看看開店祕技 →</a></div>
+                <div class="carda"><a href="#"><span class="txt">看看開店祕技</span> →</a>
+                </div>
             </div>
-            <div class="pic"><a href="#"><img
+            <div class="pic"><a href="#" ><img
                         src="https://shoplineimg.com/59c0fd06080f0690b5000cd1/635b5a9142ad55001075b1c2/500x.webp?source_format=png"
                         alt=""></a>
             </div>
         </div>
         <div class="card">
-            <div>
+            <div class="textbox">
+
                 <div class="text">
                     <h3>支持海內外電商<br>金流、物流一次搞定
                     </h3>
@@ -167,7 +181,8 @@ color: #00f;
                     <li>發票開立與串接
                     </li>
                 </ul>
-                <div class="carda"><a href="#">了解更多金物流 →</a></div>
+                <div class="carda"><a href="#"><span class="txt">了解更多金物流</span> →</a>
+                </div>
             </div>
             <div class="pic"><a href="#"><img
                         src="https://shoplineimg.com/59c0fd06080f0690b5000cd1/642659acb71fbb001a285f92/500x.webp?source_format=png"
@@ -175,7 +190,8 @@ color: #00f;
             </div>
         </div>
         <div class="card">
-            <div>
+            <div class="textbox">
+
                 <div class="text">
                     <h3>刺激下單，創造回購<br>行銷導流、促購模組任你玩</h3>
                     <p>多元優惠活動、會員集客機制、網紅分潤等多種優惠促銷，將電商行銷玩法一網打盡；加上廣告追蹤助你有效優化行銷活動，刺激顧客下單、吸引鐵粉回購！</p>
@@ -193,7 +209,8 @@ color: #00f;
                     <li>FB／Google／LINE 廣告追蹤
                     </li>
                 </ul>
-                <div class="carda"><a href="#">看更多優惠模組 →</a></div>
+                <div class="carda"><a href="#"><span class="txt">看更多優惠模組</span> →</a>
+                </div>
             </div>
             <div class="pic"><a href="#"><img
                         src="https://shoplineimg.com/59c0fd06080f0690b5000cd1/635b5a918dfd98001dae1a2c/500x.webp?source_format=png"
@@ -201,7 +218,8 @@ color: #00f;
             </div>
         </div>
         <div class="card">
-            <div>
+            <div class="textbox">
+
                 <div class="text">
                     <h3>「社群+電商」輕鬆開賣<br>打造一致的社群購物體驗</h3>
                     <p>善用社群與顧客頻繁互動，讓你透過社群也能輕鬆開賣！從直播 +1 接單、聊天機器人到各管道的訊息整合，我們都為你準備好了，不放過每個銷售環節，打造全方位的社群購物體驗！</p>
@@ -220,7 +238,8 @@ color: #00f;
                     <li>訊息整合中心
                     </li>
                 </ul>
-                <div class="carda"><a href="#">看更多社群購物功能 →</a></div>
+                <div class="carda"><a href="#"><span class="txt">看更多社群購物功能</span> →</a>
+                </div>
             </div>
             <div class="pic"><a href="#"><img
                         src="https://shoplineimg.com/59c0fd06080f0690b5000cd1/642659ac8830ec00208c4ac8/500x.webp?source_format=png"
@@ -228,7 +247,8 @@ color: #00f;
             </div>
         </div>
         <div class="card">
-            <div>
+            <div class="textbox">
+
                 <div class="text">
                     <h3>OMO 全通路無縫整併<br>輕鬆管理網店、門市以及其他通路</h3>
                     <p>不論是網店拓展門市，還是門市想發展網路生意，從商品、庫存、訂單到會員等各項虛實店舖的資料都能完善整併，輕鬆實現全通路會員經營到多店營運。</p>
@@ -246,7 +266,8 @@ color: #00f;
                     <li>Smart OMO 會員導購工具
                     </li>
                 </ul>
-                <div class="carda"><a href="#">了解更多全通路整合 →</a></div>
+                <div class="carda"><a href="#"><span class="txt">了解更多全通路整合</span> →</a>
+                </div>
             </div>
             <div class="pic"><a href="#"><img
                         src="https://shoplineimg.com/59c0fd06080f0690b5000cd1/642659ac34176d00176e375f/500x.webp?source_format=png"

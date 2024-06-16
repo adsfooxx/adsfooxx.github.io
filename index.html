@@ -6,26 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+            padding-block-start: 0;
+            padding-block-end: 0;
+        }
 
-        .top .list{          
-              flex-wrap: wrap;
-            gap: 15px;}
+        .list {
+            text-align: center;
+            width: 70px;
+        }
 
-        .top a {
-            width: 200 px;
-            height: 50px;
+        .top .a {
+            display: flex;
+            width: 60px;
+            height: 30px;
+            margin: 5px;
             background-color: #CCC;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
 
 <body>
     <div class="top">
-        作業
+
         <div class="list">
-            <a href="D0101.html">D01_1</a>
-            <a href="D0102.html">D01_2</a>
-            <a href="D0301.html">D03_1</a>
+            作業<br>
+            <div class="a"><a href="D0101.html">D01_1</a></div>
+            <div class="a"><a href="D0102.html">D01_2</a></div>
+            <div class="a"><a href="D0301.html">D03_1</a></div>
+            <div class="a"><a href="D0501.html">D05_1</a></div>
         </div>
 
 

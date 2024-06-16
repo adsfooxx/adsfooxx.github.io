@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+        .introduce {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 100px;
+        }
+
+        .card:nth-child(2n) {
+            flex-direction: row-reverse;
+        }
+
+        .card:nth-child(2n) .top .tag {
+            flex-direction: row-reverse;
+        }
+
+        .card:nth-child(2n) .carpic {
+            left: 1%;
+        }
+
+        .card:nth-child(2n) .pic {
+            left: -2%;
+        }
+
+        .card:nth-child(2n) .block {
+            width: 50%;
+            height: 50%;
+            right: 20%;
+            top: 8%;
+        }
+
+        .card:nth-child(2n) .txtbox {
+            top: 20px;
+        }
+
+
+        .card {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1000px;
+            height: 800px;
+            position: relative;
+        }
+
+        .card .top {
+            width: 33%;
+            display: flex;
+            flex-wrap: wrap;
+            height: 45%;
+            z-index: 1;
+        }
+
+        .card .top .tag {
+            justify-content: flex-start;
+            display: flex;
+            background-color: #F00;
+            color: white;
+            height: 33%;
+            width: 100%;
+        }
+
+        .card .top .tag h1 {
+            font-weight: normal;
+            font-size: 110px;
+            display: inline-block;
+            transform: rotateZ(90deg);
+        }
+
+        .card .top .tag p {
+            font-size: 48px;
+            margin: auto;
+        }
+
+        .card .top .toptxt {
+            padding: 7% 5%;
+            background-image: url("./img/toyota/tag_background.png");
+            color: white;
+            flex-grow: 1;
+            height: 55%;
+        }
+
+        .card .top .toptxt h1 {
+            font-size: 26px;
+            padding-bottom: 10px;
+        }
+
+        .card .top .toptxt p {
+            font-size: 19px;
+        }
+
+        .card .block {
+            width: 45%;
+            height: 33%;
+            background-color: #EEE;
+            position: absolute;
+            top: 4%;
+            right: 0;
+        }
+
+        .card .carpic {
+            width: 695px;
+            height: 430px;
+            position: absolute;
+            top: 14.76%;
+            right: 10%;
+        }
+
+        .card .pic {
+            position: absolute;
+            width: 65px;
+            height: 45px;
+            right: -2%;
+            top: 44.5%;
+            background-color: white;
+        }
+
+        .card .pic .picr {
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%, 40% 100%, 40% 75%, 70% 50%, 40% 25%, 40% 100%);
+        }
+
+        /* .card .txtbox{
+            z-index: 1;
+            background-color: #EEE;
+            padding: 20px 20px;
+            width: 70%;
+            position: absolute;
+            top: 64%;
+        left: 5%;
+
+        } */
+        .card .txtbox {
+            position: relative;
+            background-color: #EEE;
+            padding: 20px 20px;
+            width: 70%;
+            top: 65px;
+            height: min-content;
+
+        }
+
+        .card .txtbox h2 {
+            color: #F00;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card .txtbox ol {
+            background-color: #000;
+            color: #FFF;
+            display: inline;
+            padding: 3px 7px;
+        }
+
+        .card .txtbox li::marker {
+            color: #F00;
+        }
+
+        .card .txtbox li {
+            margin: 4px 7px;
+            text-indent: -20PX;
+            padding-left: 28px;
+            font-size: 15px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="introduce">
+        <div class="card">
+            <div class="top">
+                <div class="tag">
+                    <h1>01</h1>
+                    <p>操控樂趣</p>
+                </div>
+                <div class="toptxt">
+                    <h1>人人滿意的駕駛體驗</h1>
+                    <p>透過最佳重量分配，實現平順起步、直線穩定家數，過彎同時保持車身平穩，貸給駕駛更靈敏的道路反饋，享受隨心馳聘的行駛快感。</p>
+                </div>
+            </div>
+            <div class="block"></div>
+            <div class="carpic"><img src="./img/toyota/01.png">
+                <div class="pic">
+                    <div class="picr"></div>
+                </div>
+            </div>
+            <div class="txtbox">
+                <h2>因為我們做了這些革新 —————————————————————</h2>
+                <div class="txt">
+                    <ol>低重心設計</ol>
+                    <li>透過低重心設計，不僅呈現更低福的外觀，更能減少車身側頃，保持高速行駛穩定性。</li>
+                    <ol>車體剛性強化</ol>
+                    <li>車身結構採用超高強度鋼材，提高車輛穩定性，同時藉由雷射強化焊接技術，大幅增加焊接點數量，提升車身抗紐剛性，強化駕馭穩定性及安全性。</li>
+                    <ol>四輪獨立懸吊</ol>
+                    <li>搭載全新四輪獨立懸吊設定，透過懸吊的高乘載強度，保持輪胎抓地力，同時兼顧轉向靈敏度與清溪路感回饋，提升駕馭樂趣。</li>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="top">
+                <div class="tag">
+                    <h1>02</h1>
+                    <p>安全守護</p>
+                </div>
+                <div class="toptxt">
+                    <h1>行車更安心的高剛性車體</h1>
+                    <p>您的愛車會妥善保護您，強悍穩固的車身可使您安全無虞。世界級的安全空能讓您輕鬆自如享受旅程、毫無後顧之憂。</p>
+                </div>
+            </div>
+            <div class="block"></div>
+            <div class="carpic"><img src="./img/toyota/02.png">
+                <div class="pic">
+                    <div class="picr"></div>
+                </div>
+            </div>
+            <div class="txtbox">
+                <h2>因為我們做了這些革新 —————————————————————</h2>
+                <div class="txt">
+                    <ol>主動安全</ol>
+                    <li>以先進的TSS系統，主動偵測路況，輔助駕駛判斷路況並維持行車案全。</li>
+                    <ol>被動安全</ol>
+                    <li>堅固的高剛性車體，使用熱沖壓材料的高強度抗紐鋼板，強化座艙對意外事故的保護力。</li>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="top">
+                <div class="tag">
+                    <h1>03</h1>
+                    <p>乘坐舒適</p>
+                </div>
+                <div class="toptxt">
+                    <h1>令人放鬆舒適的車室空間</h1>
+                    <p>車室空間設計著重人體工學，透過方向盤、踏板等位置優化，追求更舒適的駕駛位置，並以心形座椅設計，提高座椅包覆性，致力實現長途駕駛不疲勞的舒適駕馭體驗。</p>
+                </div>
+            </div>
+            <div class="block"></div>
+            <div class="carpic"><img src="./img/toyota/03.png">
+                <div class="pic">
+                    <div class="picr"></div>
+                </div>
+            </div>
+            <div class="txtbox">
+                <h2>因為我們做了這些革新 —————————————————————</h2>
+                <div class="txt">
+                    <ol>駕駛位置最佳化</ol>
+                    <li>針對駕駛位置進行徹底的修改，讓駕馭者可如同握手般自然且舒適地操控方向盤。</li>
+                    <ol>駕馭視野佳</ol>
+                    <li>考量駕駛坐進車內的高度，透過前擋風玻璃位置的調整，達到忙區極小化，使駕駛視野更開闊，同步提升駕馭安全。</li>
+                    <ol>更寧靜的車室</ol>
+                    <li>採用最新三層結構的隔音材料，與引擎、變速箱的零件改革，將座艙的震動抑止在最小限度，提供乘客舒適安靜的感受。</li>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="top">
+                <div class="tag">
+                    <h1>04</h1>
+                    <p>以人為本</p>
+                </div>
+                <div class="toptxt">
+                    <h1>使用者導向的貼心設計</h1>
+                    <p>藉由高度人性化的介面整合、傳遞車輛資訊，豐富日常駕駛體驗。從提升油耗表現到行李廂空間最適化，均細心考量，更加貼近使用者真正所需與習慣，並給予及時回應</p>
+                </div>
+            </div>
+            <div class="block"></div>
+            <div class="carpic"><img src="./img/toyota/04.png">
+                <div class="pic">
+                    <div class="picr"></div>
+                </div>
+            </div>
+            <div class="txtbox">
+                <h2>因為我們做了這些革新 —————————————————————</h2>
+                <div class="txt">
+                    <ol>優異油耗表現</ol>
+                    <li>以Corolla Sport為例，更強勁的高效引擎將熱效率提升至40％，達到世界級標準，屢屢突破燃油效率新境界</li>
+                    <ol>行李箱空間最適化</ol>
+                    <li>以第四代Prius為例，透過將電池位置移到後座下方，讓行李箱擁有更大的空間</li>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="top">
+                <div class="tag">
+                    <h1>05</h1>
+                    <p>引以為傲</p>
+                </div>
+                <div class="toptxt">
+                    <h1>極具吸引力的精心設計</h1>
+                    <p>TNGA車款擁有讓人忍不住回頭的新潮外觀、讓駕駛充滿自信的駕馭快感！不僅讓車主能展現個人風格，也能讓擁有者都能引以為傲。</p>
+                </div>
+            </div>
+            <div class="block"></div>
+            <div class="carpic"><img src="./img/toyota/05.png">
+                <div class="pic">
+                    <div class="picr"></div>
+                </div>
+            </div>
+            <div class="txtbox">
+                <h2>因為我們做了這些革新 —————————————————————</h2>
+                <div class="txt">
+                    <ol>設計概念</ol>
+                    <li>TNGA低重心設計，不僅呈現更低服的運動化萬關，更講究高品質內裝的一致性。</li>
+                    <ol>環保概念</ol>
+                    <li>為了能對環境保護盡一份心力，我們全面提升傳統引擎、變速箱與油電複合動力的動力效能。</li>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+</body>
+
+</html>

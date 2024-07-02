@@ -25,29 +25,33 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid #000;
-            background-image: url(../img/bgimage.png);
         }
-        .src{
+
+        .src {
             height: 250px;
             width: 100%;
             flex-wrap: wrap;
             display: flex;
-            gap: 20px  ;
+            gap: 20px;
             margin: 10px;
         }
-        .title{
-margin: auto;
-font-size: 25px;
+
+        .title {
+            margin: auto;
+            font-size: 25px;
 
         }
+
         .text {
             width: 90%;
             text-align: center;
         }
-        .textbox{
+
+        .textbox {
             width: 90%;
         }
-        .button{
+
+        .button {
             position: relative;
             height: 90%;
             display: flex;
@@ -56,7 +60,8 @@ font-size: 25px;
             margin-bottom: 40px;
             align-content: flex-end
         }
-        .light{
+
+        .light {
             width: 50px;
             height: 50px;
             position: absolute;
@@ -66,50 +71,90 @@ font-size: 25px;
             border: 1px solid #000;
             background-color: #F003;
         }
-       .f{
+
+        .f {
             /* display:  none; */
 
             border: 1px solid #000;
             background-color: #F003;
         }
-        .w{
-            display:  none;
+
+        .w {
+            display: none;
 
             border: 1px solid #000;
             background-color: #F003;
-            
+
             animation: colorChangeG 1s infinite;
         }
-       .r{
-            display:  none;
+
+        .r {
+            display: none;
             border: 1px solid #000;
             background-color: #F003;
             animation: colorChangeR 1s infinite;
         }
-        .y{
-            display:  none;
+
+        .y {
+            display: none;
             border: 1px solid #000;
             background-color: #F003;
             animation: colorChangeY 1s infinite;
 
         }
+
         @keyframes colorChangeY {
-            0% { background-color: yellow; }
-            49%{background-color: yellow; }
-            50% { background-color: #F003; }
-            100% { background-color: #F003; }
+            0% {
+                background-color: yellow;
+            }
+
+            49% {
+                background-color: yellow;
+            }
+
+            50% {
+                background-color: #F003;
+            }
+
+            100% {
+                background-color: #F003;
+            }
         }
+
         @keyframes colorChangeR {
-            0% { background-color: red; }
-            49%{background-color: red; }
-            50% { background-color: #F003; }
-            100% { background-color: #F003; }
+            0% {
+                background-color: red;
+            }
+
+            49% {
+                background-color: red;
+            }
+
+            50% {
+                background-color: #F003;
+            }
+
+            100% {
+                background-color: #F003;
+            }
         }
+
         @keyframes colorChangeG {
-            0% { background-color: green; }
-            49%{background-color: green; }
-            50% { background-color: #F003; }
-            100% { background-color: #F003; }
+            0% {
+                background-color: green;
+            }
+
+            49% {
+                background-color: green;
+            }
+
+            50% {
+                background-color: #F003;
+            }
+
+            100% {
+                background-color: #F003;
+            }
         }
     </style>
 </head>
@@ -132,60 +177,89 @@ font-size: 25px;
     </div>
 
     <script>
-const fL=document.querySelector(".f");
-const rL=document.querySelector(".r");
-const gL=document.querySelector(".w");
-const yL=document.querySelector(".y");
+        const fL = document.querySelector(".f");
+        const rL = document.querySelector(".r");
+        const gL = document.querySelector(".w");
+        const yL = document.querySelector(".y");
         const myinputbox = document.querySelector(".textbox");
-        const mytitle = document.querySelector(".title");
+        const mytitle = document.querySelector(".text");
         const btnRegame = document.querySelector('.regame');
         const btnclick = document.querySelector('.click');
+
         let tarNum = 0;
         let maxNum = 100;
         let minNum = 1;
+        let isplaying = true;
+
         btnclick.addEventListener("click", click);
         btnRegame.addEventListener("click", rebtn);
         tarNum = Math.floor(Math.random() * 100) + 1;
 
         function rebtn() {
-            fL.style.display='block';
-            rL.style.display='none';
-            gL.style.display='none';
-            yL.style.display='none';
+            fL.style.display = 'block';
+            rL.style.display = 'none';
+            gL.style.display = 'none';
+            yL.style.display = 'none';
             tarNum = Math.floor(Math.random() * 100) + 1;
             maxNum = 100;
             minNum = 1;
             mytitle.textContent = `來個${minNum}~${maxNum}之間的數字吧`;
+            playingChange(false);
         }
+
+        function playingChange(bool) {
+            if (bool === true) {
+                btnclick.disabled = false;
+                btnclick.style.backgroundColor = 'black';
+
+                isplaying = false;
+            } else if (bool === false) {
+
+                btnclick.disabled = true;
+                btnclick.style.backgroundColor = '#AAA';
+                isplaying = true
+            } else { console.log(`change bug isplaying=${isplaying}`); }
+        }
+
 
         function click() {
             try {
-                const myinput = myinputbox.value;
+                const myinput = parseInt(myinputbox.value);
                 console.log(myinput)
                 if (isNaN(myinput)) {
                     throw new error;
                 }
-                fL.style.display='none';
-                if (myinput == tarNum) {
+
+                fL.style.display = 'none';
+
+
+                if (myinput > maxNum) {
+                    mytitle.textContent = `太大了 別調皮，請輸入${minNum}~${maxNum}之間的數字吧`;
+                } else if (myinput < minNum) {
+
+                    mytitle.textContent = `太小了 別調皮，請輸入${minNum}~${maxNum}之間的數字吧`;
+                }
+                else if (myinput == tarNum) {
                     mytitle.textContent = `答對了，答案是${tarNum}`;
-                   gL.style.display='block';
-                   rL.style.display='none';
-                   yL.style.display='none';
+                    gL.style.display = 'block';
+                    rL.style.display = 'none';
+                    yL.style.display = 'none';
+                    playingChange(isplaying);
                 } else if (myinput > tarNum) {
                     maxNum = myinput;
                     mytitle.textContent = `再來個${minNum}~${maxNum}之間的數字吧`;
-                    yL.style.display='block';
-                    rL.style.display='none';
+                    yL.style.display = 'block';
+                    rL.style.display = 'none';
                 } else if (myinput < tarNum) {
                     minNum = myinput;
                     mytitle.textContent = `再來個${minNum}~${maxNum}之間的數字吧`;
-                    yL.style.display='block';
-                    rL.style.display='none';
+                    yL.style.display = 'block';
+                    rL.style.display = 'none';
                 }
             } catch (error) {
                 mytitle.textContent = `請輸入${minNum}~${maxNum}之間的有效數字`;
-                yL.style.display='none';
-                rL.style.display='block';
+                yL.style.display = 'none';
+                rL.style.display = 'block';
             }
         }
 

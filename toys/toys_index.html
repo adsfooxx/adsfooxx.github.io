@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../css/grid12.css">
     <style>
         * {
-            --color-green:#39ff14;
-            color:var(--color-green);
+            --color-green: #39ff14;
+            color: var(--color-green);
             text-decoration: none;
         }
 
@@ -18,13 +18,14 @@
         }
 
         .top {
-
-            background-color: #FFF;
+width: 100%;
+            background-color: black;
         }
 
         .serch {
-            margin: auto;
-            width: 100%;
+            margin-left: auto;
+            width: 50%;
+            padding: 0;
         }
 
         .box {
@@ -36,29 +37,50 @@
             width: 100%;
             position: relative;
         }
-        .tag::after{
+
+        .tag::after {
             content: "";
             position: absolute;
             width: 75%;
             height: 1px;
-            background-color:var(--color-green);
-            top:10px;
+            background-color: var(--color-green);
+            top: 10px;
             right: 50px;
 
         }
 
         .pic {
             width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         .pic img {
-            width: 100%;
+            width: 90px;
+            height: 50px;
             vertical-align: top;
+            border-bottom: 1px solid #39ff14;
         }
 
-        .col p {
+        .col .card p {
+            width: 90px;
             text-align: center;
+            display: block;
+            height: 2.5em;
         }
+        .card a{
+
+            border: 1px solid var(--color-green);
+        }
+
+        .card {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: space-between;
+            justify-content: center;
+        }
+
     </style>
 </head>
 
@@ -74,79 +96,113 @@
 
         <div class="box row row-col-3 row-col-md-5 row-col-lg-6">
             <div class="tag">社群</div>
-            <div class="col"><a href="https://www.youtube.com/">
-                    <div class="pic"><img src=""></div>
-                    <p>youtube</p>
-                </a></div>
-            <div class="col"><a href="https://www.twitch.tv/">
-                    <div class="pic"><img src=""></div>
-                    <p>twitch</p>
-                </a></div>
-            <div class="col"><a href="https://x.com/home">
-                    <div class="pic"><img src=""></div>
-                    <p>X</p>
-                </a></div>
-            <div class="col"><a href="https://www.facebook.com/">
-                    <div class="pic"><img src=""></div>
-                    <p>facebook</p>
-                </a></div>
-            <div class="col"><a href="https://www.pixiv.net/">
-                    <div class="pic"><img src=""></div>
-                    <p>Pixiv</p>
-                </a></div>
-            <div class="col"><a href="https://holodex.net/">
-                    <div class="pic"><img src=""></div>
-                    <p>HoloDex</p>
-                </a></div>
-            <div class="col"><a href="https://forum.gamer.com.tw/">
-                    <div class="pic"><img src=""></div>
-                    <p>巴哈</p>
-                </a></div>
+            <div class="col">
+                <div class="card">
+                    <a href="https://www.youtube.com/">
+                        <div class="pic"><img src="../img/toys/logo/youtube.jpg"></div>
+                        <p>youtube</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://www.twitch.tv/">
+                        <div class="pic"><img src="../img/toys/logo/twitch.png"></div>
+                        <p>twitch</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://x.com/home">
+                        <div class="pic"><img src="../img/toys/logo/X.png"></div>
+                        <p>X</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://www.facebook.com/">
+                        <div class="pic"><img src="../img/toys/logo/facebook.jpg"></div>
+                        <p>facebook</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://www.pixiv.net/">
+                        <div class="pic"><img src="../img/toys/logo/pixiv.jpg"></div>
+                        <p>Pixiv</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://holodex.net/">
+                        <div class="pic"><img src="../img/toys/logo/holodex.jpg"></div>
+                        <p>HoloDex</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://forum.gamer.com.tw/">
+                        <div class="pic"><img src="../img/toys/logo/bahamut.jpg"></div>
+                        <p>巴哈</p>
+                    </a></div>
+            </div>
 
         </div>
         <div class="box row row-col-3 row-col-md-5 row-col-lg-6">
             <div class="tag">遊戲</div>
-            <div class="col"><a href="https://osu.ppy.sh/beatmapsets">
-                    <div class="pic"><img src=""></div>
-                    <p>OSU</p>
-                </a></div>
-            <div class="col"><a href="https://warframe.market/zh-hant/">
-                    <div class="pic"><img src=""></div>
-                    <p>warframe Market</p>
-                </a></div>
-            <div class="col"><a href="https://overframe.gg/tier-list/primary-weapons/">
-                    <div class="pic"><img src=""></div>
-                    <p>warframe Tier</p>
-                </a></div>
-            <div class="col"><a href="https://poedb.tw/tw/">
-                    <div class="pic"><img src=""></div>
-                    <p>流亡編年史</p>
-                </a></div>
-            <div class="col"><a href="https://www.op.gg/champions">
-                    <div class="pic"><img src=""></div>
-                    <p>OPGG</p>
-                </a></div>
-            <div class="col"><a href="https://mapleislandv54.com/">
-                    <div class="pic"><img src=""></div>
-                    <p>Mapleisland(54谷)</p>
-                </a></div>
-            <div class="col"><a href="https://maple.yampiz.com/tw/p">
-                    <div class="pic"><img src=""></div>
-                    <p>楓葉語</p>
-                </a></div>
+            <div class="col">
+                <div class="card"><a href="https://osu.ppy.sh/beatmapsets">
+                        <div class="pic"><img src="../img/toys/logo/osu.png"></div>
+                        <p>OSU</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://warframe.market/zh-hant/">
+                        <div class="pic"><img src="../img/toys/logo/warframe-market.jpg"></div>
+                        <p>warframe Market</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://overframe.gg/tier-list/primary-weapons/">
+                        <div class="pic"><img src="../img/toys/logo/warframe-tier.png"></div>
+                        <p>warframe Tier</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://poedb.tw/tw/">
+                        <div class="pic"><img src="../img/toys/logo/poedb.png"></div>
+                        <p>流亡編年史</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://www.op.gg/champions">
+                        <div class="pic"><img src="../img/toys/logo/OPGG.jpg"></div>
+                        <p>OPGG</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://mapleislandv54.com/">
+                        <div class="pic"><img src="../img/toys/logo/maplestory.png"></div>
+                        <p>Mapleisland (54谷)</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://maple.yampiz.com/tw/p">
+                        <div class="pic"><img src="../img/toys/logo/maplestory.png"></div>
+                        <p>楓葉語</p>
+                    </a></div>
+            </div>
 
         </div>
 
         <div class="box row row-col-3 row-col-md-5 row-col-lg-6">
             <div class="tag">頁遊</div>
-            <div class="col"><a href="https://godfield.net/?lang=zh-hant">
-                    <div class="pic"><img src=""></div>
-                    <p>GodField 神界</p>
-                </a></div>
-            <div class="col"><a href="https://garticphone.com/zh-TW">
-                    <div class="pic"><img src=""></div>
-                    <p>傳話</p>
-                </a></div>
+            <div class="col">
+                <div class="card"><a href="https://godfield.net/?lang=zh-hant">
+                        <div class="pic"><img src="../img/toys/logo/GF.jpg"></div>
+                        <p>GodField<br>神界</p>
+                    </a></div>
+            </div>
+            <div class="col">
+                <div class="card"><a href="https://garticphone.com/zh-TW">
+                        <div class="pic"><img src="../img/toys/logo/GP.jpg"></div>
+                        <p>傳話</p>
+                    </a></div>
+            </div>
 
 
         </div>

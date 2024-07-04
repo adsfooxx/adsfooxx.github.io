@@ -6,24 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/grid12.css">
+
+
     <style>
         * {
             --color-green: #39ff14;
             text-decoration: none;
         }
-
+@font-face {
+    font-family: "fz_pix";
+    src: url("../font_style/Tiny5/Tiny5-Regular.ttf") format('truetype');
+}
         body {
             background-color: black;
         }
 
         .top {
-width: 100%;
+            width: 100%;
             background-color: black;
+            display: flex;
+        }
+        .logo{
+            display: flex;
+            width: 25%;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+        .logo p{
+            display: block;
+            color: var(--color-green);
+            font-size: 40px;
+            font-family: "fz_pix";
         }
 
         .serch {
             margin-left: auto;
-            width: 50%;
+            width: 75%;
             padding: 0;
         }
 
@@ -34,7 +54,7 @@ width: 100%;
         }
 
         .tag {
-        color: var(--color-green);
+            color: var(--color-green);
             width: 100%;
             position: relative;
         }
@@ -68,12 +88,26 @@ width: 100%;
             text-align: center;
             display: block;
             height: 2.5em;
-            
+
             color: var(--color-green);
         }
-        .card a{
+
+        .card a {
 
             border: 1px solid var(--color-green);
+        }
+
+        .card:hover a p {
+            color: aqua;
+        }
+
+        .card:hover a {
+            border: 1px solid aqua;
+        }
+
+        .card:hover img {
+
+            border-bottom: 1px solid aqua;
         }
 
         .card {
@@ -83,12 +117,12 @@ width: 100%;
             align-content: space-between;
             justify-content: center;
         }
-
     </style>
 </head>
 
 <body>
     <div class="top">
+        <div class="logo"><p>7  n</p></div>
         <div class="serch col-4">
             <script async src="https://cse.google.com/cse.js?cx=f4bb504dfbf1a42a3">
             </script>

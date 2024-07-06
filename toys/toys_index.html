@@ -13,20 +13,27 @@
             --color-green: #39ff14;
             text-decoration: none;
         }
-@font-face {
-    font-family: "fz_pix";
-    src: url("../font_style/Tiny5/Tiny5-Regular.ttf") format('truetype');
-}
+
+        @font-face {
+            font-family: "fz_pix";
+            src: url("../font_style/Tiny5/Tiny5-Regular.ttf") format('truetype');
+        }
+
         body {
             background-color: black;
         }
 
         .top {
+            z-index: 1;
+            position: sticky;
+            top: 0px;
             width: 100%;
             background-color: black;
             display: flex;
+            border-bottom: 1px solid var(--color-green);
         }
-        .logo{
+
+        .logo {
             display: flex;
             width: 25%;
             justify-content: center;
@@ -34,7 +41,8 @@
 
 
         }
-        .logo p{
+
+        .logo p {
             display: block;
             color: var(--color-green);
             font-size: 40px;
@@ -122,7 +130,9 @@
 
 <body>
     <div class="top">
-        <div class="logo"><p>7  n</p></div>
+        <div class="logo">
+            <p>7 n</p>
+        </div>
         <div class="serch col-4">
             <script async src="https://cse.google.com/cse.js?cx=f4bb504dfbf1a42a3">
             </script>

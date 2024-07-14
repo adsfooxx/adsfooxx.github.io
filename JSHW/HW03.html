@@ -57,9 +57,13 @@
         .m-box .title_Y {
             position: absolute;
             left: 30px;
+            font-size: 24px;
+            margin-top: 5px;
         }
 
-        .m-box p {
+        .m-box .title_M {
+            display: block;
+            width: 200px;
             margin-top: 5px;
             text-align: center;
             font-size: 24px;
@@ -159,7 +163,7 @@
 
         .txt p {
             margin-bottom: 0;
-            margin-left: 15px;
+            margin-left: 5px;
         }
 
         .inP {
@@ -175,8 +179,7 @@
         }
 
         .inP input {
-            display: none;
-            width: 60%;
+            width: 55%;
         }
 
         .inP .btn {
@@ -227,7 +230,7 @@
             </div>
             <div class="box-day">
 
-                <!-- <div class="day">
+                <!-- <div class="day">  42
                     <div class="addbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+</div>
                     <div class="d">1</div>
                     <div class="txt">
@@ -259,6 +262,20 @@
                 <div class="modal-body">
                     <form class="row g-3">
                         <div class="col-md-12">
+                            <div class="input-group mb-3 ">
+                                <input type="text" class="form-control col-5" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" id="input_year">
+                                <span class="input-group-text text-success bg-dark border-success-subtle"
+                                    id="inputGroup-sizing-default">年</span>
+                                <input type="text" class="form-control col-5" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" id="input_month">
+                                <span class="input-group-text text-success bg-dark border-success-subtle"
+                                    id="inputGroup-sizing-default">月</span>
+                                <input type="text" class="form-control col-5" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default" id="input_day">
+                                <span class="input-group-text text-success bg-dark border-success-subtle"
+                                    id="inputGroup-sizing-default">日</span>
+                            </div>
                             <div class="input-group mb-3">
                                 <div class="dropdown col-md-3">
                                     <div class="col-md-11">
@@ -278,11 +295,11 @@
                                     </ul>
                                 </div>
                                 <input type="text" class="form-control col-5" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default">
+                                    aria-describedby="inputGroup-sizing-default" id="input_hours">
                                 <span class="input-group-text text-success bg-dark border-success-subtle"
                                     id="inputGroup-sizing-default">點</span>
                                 <input type="text" class="form-control col-5" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default">
+                                    aria-describedby="inputGroup-sizing-default" id="input_min">
                                 <span class="input-group-text text-success bg-dark border-success-subtle"
                                     id="inputGroup-sizing-default">分</span>
                             </div>
@@ -290,26 +307,35 @@
                                 <span class="input-group-text text-success bg-dark border-success-subtle"
                                     id="inputGroup-sizing-default">事情</span>
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default">
+                                    aria-describedby="inputGroup-sizing-default" id="input_osikoto">
                             </div>
                             <!-- 顏色 之後搭配object再改 -->
                             <in class="color-choose w-25  input-group mb-3 d-flex align-items-center">
                                 <span class="input-group-text text-success bg-dark border-success-subtle"
                                     id="inputGroup-sizing-default m-auto ">顏色</span>
                                 <input type="color" class="form-control d-block" aria-label="Sizing example input"
-                                    aria-describedby="inputGroup-sizing-default">
+                                    aria-describedby="inputGroup-sizing-default" id="input_color">
                         </div>
                 </div>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-success">確認</button>
+                    <button type="button" class="btn btn-success" id="bs_add">確認</button>
                 </div>
             </div>
 
         </div>
     </div>
-
+    <div class="toast-container position-absolute top-0 start-50 translate-middle-x bg-dark border-success-subtle">
+        <div id="game_msg_toast" class="toast bg-dark border-success-subtle" role="alert" aria-live="assertive"
+            aria-atomic="true">
+            <div class="toast-header bg-dark border-success-subtle">
+                <strong class="me-auto">提醒</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">Hello, world! This is a toast message.</div>
+        </div>
+    </div>
 
 
 
@@ -323,6 +349,25 @@
         const titleM = document.querySelector('.title_M');
         const titleY = document.querySelector('.title_Y');
         const daybox = document.querySelector('.box-day');
+        const last_M_Btn = document.querySelector('#last_M');
+        const next_M_Btn = document.querySelector('#next_M');
+
+        const input_hours = document.querySelector("#input_hours");
+        const input_min = document.querySelector("#input_min");
+        const input_osikoto = document.querySelector("#input_osikoto");
+        const input_color = document.querySelector('#input_color');
+        const bs_Add = document.querySelector('#bs_add');
+        const input_Y = document.querySelector('#input_year');
+        const input_M = document.querySelector('#input_month');
+        const input_D = document.querySelector('#input_day');
+        const setTime_select = document.querySelector('#validationCustom04');
+        const gameMsgToast = document.querySelector("#game_msg_toast");
+        const toastBootstrap = new bootstrap.Toast(gameMsgToast, {
+            delay: 1000,
+        });
+
+
+
 
         // 
         const MArry = [
@@ -331,59 +376,195 @@
 
 
         // 
-
-
+        const localKey = 'data';
         const currentDate = new Date();
 
-        const this_Y = currentDate.getFullYear();
-        const this_M = currentDate.getMonth();
-        const getFirstdayInWeek = new Date(this_Y, this_M, 1).getDay();
-        const getLasterDay = new Date(this_Y, this_M, 0).getDay() + 1;
-        const getLastDayinMouth = new Date(this_Y, this_M + 1, 0).getDay();
-        const this_M_has_Days =new Date(this_Y, this_M + 1, 0).getDate();
+        let this_M = currentDate.getMonth();
+        let this_Y = currentDate.getFullYear();
+        let now_M = this_M;
+        let now_Y = this_Y;
+        let getFirstdayInWeek = new Date(this_Y, this_M, 1).getDay();
+        let getLasterDay = new Date(this_Y, this_M, 0).getDay() + 1;
+        let getLastDayinMouth = new Date(this_Y, this_M + 1, 0).getDay();
+        let this_M_has_Days = new Date(this_Y, this_M + 1, 0).getDate();
+
+
         // 
         titleM.textContent = MArry[this_M];
         titleY.textContent = this_Y;
 
-        const date = {
-            id: '20240719',
-            year: 2024,
-            manth: 7,
-            day: 19,
-            todolist: [{
-                time: '06:00',
-                at: 'home',
-                todo: 'birsday',
-                color: '00EBEB'
-            },
-            ]
-        };
+        // const data = [{
+        //     id: '20240719',
+        //     year: 2024,
+        //     month: 7,
+        //     day: 19,
+        //     list: [{
+        //         time: '06:00',
+        //         // at: 'home',
+        //         todo: 'birsday',
+        //         color: '#00EBEB'
+        //     },
+        //     ]
+        // }];
+        getDays(0);
+
+
+        // let Jdata = JSON.stringify(data);
+
+        // localStorage.setItem(localKey, Jdata);
+
+
+        // BTN
+
+        last_M_Btn.addEventListener('click', () => {
+            return getDays(-1);
+        });
+        next_M_Btn.addEventListener('click', () => {
+            return getDays(1);
+        });
+        bs_Add.addEventListener('click', function () {
+            const todoContent = input_osikoto.value.trim();
+            let setTime = Number(input_hours.value.trim());
+            if (setTime_select.value === '下午') {
+                setTime += 12;
+            }
+
+            if (!todoContent) {
+                showHint('請輸入事件');
+                return
+            };
+            const todoItem = [{
+                id: new Date().valueOf(),
+                year: now_Y,
+                month: now_M + 1,
+                day: Number(input_D.value),
+                list: {
+                    time: `${setTime}:${padToTwoDigits(input_min.value)}`,
+                    // at: 'home',
+                    todo: `${input_osikoto.value}`,
+                    color: `${input_color.value}`
+                },
+            }];
+            console.log(getLocalItem());
+            saveTodoItem(todoItem);
+
+            getDays(0);
+
+            showHint('事件以新增');
+
+            input_osikoto.value = '';
+
+        })
 
 
 
-        daybox.innerHTML = '';
-        // 開場讀取
-        // 上個月補間
-        for (let i = 0; i < getLasterDay; i++) {
-
-            daybox.innerHTML += craftOutDay();
 
 
-        }
-        for (let i = 1; i <= this_M_has_Days; i++) {
-            daybox.innerHTML += craftDay(i);
 
-        }
 
-        // 下個月補間
-        for (let i = 0; i < getLastDayinMouth; i++) {
-            daybox.innerHTML += craftOutDay();
-        }
+
 
         //  function
         window.addEventListener("load", function (event) {
             // renderingTodoList();
         });
+
+
+        function addDefule(d) {
+            input_color.value = '#39FF14';
+            input_Y.value = now_Y;
+            input_M.value = now_M + 1;
+            input_D.value = d;
+            setTime_select.value = '上午';
+            const now = new Date();
+            input_hours.value = now.getHours();
+            input_min.value = now.getMinutes();
+
+
+        }
+
+        function showHint(msg) {
+            gameMsgToast.querySelector(".toast-body").textContent = msg;
+            // const toastBootstrap = bootstrap.Toast.getOrCreateInstance(gameMsgToast);
+            toastBootstrap.show();
+        }
+
+        function padToTwoDigits(number) {
+    return number < 10 ? '0' + number : String(number);
+}
+
+
+
+        function getLocalItem() {
+            const localItem = localStorage.getItem(localKey);
+            return localItem ? JSON.parse(localItem) : [];
+
+        }
+
+        function setLocal(todolist) {
+            const date = JSON.stringify(todolist);
+            localStorage.setItem(localKey, date)
+        }
+        function saveTodoItem(todoItem) {
+            const todoList = getLocalItem();
+
+            // console.log(todoList);
+            // console.log(Array.isArray(todoList));
+            // console.log(Array.isArray(todoItem));
+            todoList.push(todoItem);
+            setLocal(todoList);
+        }
+
+
+        function getDays(M) {
+
+            if (now_M === 0 && M === -1) {
+                now_Y = now_Y - 1;
+                now_M = 11
+            } else if (now_M === 11 && M === 1) {
+                now_Y = now_Y + 1;
+                now_M = 0
+            } else {
+                titleY.textContent = this_Y;
+                now_M = now_M + M;
+            }
+            const todoList = getLocalItem();
+            console.log(todoList);
+            getFirstdayInWeek = new Date(now_Y, now_M, 1).getDay();
+            getLasterDay = new Date(now_Y, now_M, 0).getDay() + 1;
+            getLastDayinMouth = new Date(now_Y, now_M + 1, 0).getDay();
+            this_M_has_Days = new Date(now_Y, now_M + 1, 0).getDate();
+
+            // 
+            titleM.textContent = MArry[now_M];
+            titleY.textContent = now_Y;
+
+            daybox.innerHTML = '';
+            // 開場讀取
+            // 上個月補間
+            if (getLasterDay < 7) {
+                for (let i = 0; i < getLasterDay; i++) {
+
+                    daybox.innerHTML += craftOutDay();
+                }
+            }
+            // 指定月份補間
+            for (let i = 1; i <= this_M_has_Days; i++) {
+
+
+
+
+
+                daybox.innerHTML += craftDay(i, todoList);
+
+            }
+
+            // 下個月補間
+            for (let i = 0; i < 6 - getLastDayinMouth + 7; i++) {
+                daybox.innerHTML += craftOutDay();
+            }
+        }
+
 
 
         function craftOutDay() {
@@ -394,25 +575,88 @@
                 </div>`
 
         }
-        function craftDay(day) {
-            return `<div class="day">
-                    <div class="addbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+</div>
-                    <div class="d">${day}</div>
-                    <div class="txt">
-                        <div class="inP">
-                            <p>戰爭</p>
-                            <input type="text" class="input">
-                            <button class="btn saBtn">save</button>
-                            <button class="btn edBtn">Edit</button>
-                            <button class="btn reBtn">del</button>
-                        </div>
+        function craftDay(day, todoList) {
+            const todosForDay = todoList.map(array => array[0]).filter(item =>
+                item.day === day &&
+                item.month === now_M + 1 &&
+                item.year === now_Y
+            )
 
-                    </div>
-                </div>`
 
+
+
+            let todoItemsHtml = '';
+            // console.log(todoList);
+            // console.log(todosForDay);
+            todosForDay.forEach(item => {
+                // console.log(item.id);
+                todoItemsHtml += `
+
+                <div class="inP">
+                    <p class="listP" style='color:${item.list.color}'>${item.list.time}|  |${item.list.todo}</p>
+                    <input type="text" class="input d-none todo-content">
+                    <button class="btn saBtn " onclick="saveBtn(${item.id},this)">save</button>
+                    <button class="btn edBtn" onclick="editBtn(${item.id},this)">Edit</button>
+                    <button class="btn reBtn" onclick="removeBtn(${item.id},this)">del</button>
+            </div>`;
+            });
+
+
+            return `
+        <div class="day" data-id='${day}'>
+            <div class="addbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="addDefule(${day})">+</div>
+            <div class="d">${day}</div>
+            <div class="txt">
+            ${todoItemsHtml}                
+            </div>
+        </div>`;
         }
+        function saveBtn(id, el) {
 
+            const todoContent = el.parentElement.querySelector(".todo-content");
+            const val = todoContent.value.trim();
+            if (!val) return;
 
+            const todoList = getLocalItem();
+            const todoItem = todoList.find(array => array[0].id === id);
+            if (!todoItem) return;
+
+            // console.log(todoItem);
+            todoItem[0].list.todo = val;
+            setLocal(todoList);
+            getDays(0);
+        }
+        function editBtn(id, el) {
+            const todoContent = el.parentElement.querySelector(".todo-content");
+            todoContent.disabled = false;
+            const saveBtn = el.parentElement.querySelector(".saBtn");
+            // saveBtn.classList.remove("d-none");
+            saveBtn.classList.add("d-block");
+            const input = el.parentElement.querySelector('.input');
+            input.classList.remove('d-none');
+            const p = el.parentElement.querySelector('.listP');
+            input.value = p.textContent;
+            p.classList.add("d-none");
+            el.classList.add("d-none");
+        }
+        function removeBtn(id, el) {
+            let todoList = getLocalItem();
+
+      
+            let todoItemIdx;
+            const todoItem = todoList.find((array, idx) => {
+                if (array[0].id === id) {
+                    todoItemIdx = idx;
+                    return true;
+                }
+                return false;
+            });
+
+            if (!todoItem) return;
+            todoList.splice(todoItemIdx, 1);
+            setLocal(todoList);
+            getDays(0);
+        }
 
 
     </script>

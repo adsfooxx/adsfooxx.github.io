@@ -475,10 +475,18 @@
             input_Y.value = now_Y;
             input_M.value = now_M + 1;
             input_D.value = d;
-            setTime_select.value = '上午';
+
             const now = new Date();
-            input_hours.value = now.getHours();
+            let now_h= now.getHours();
+            setTime_select.value = '下午';
             input_min.value = now.getMinutes();
+            if (now_h >= 12) {
+                input_hours.value = now.getHours()-12;
+                input_hours -= 12;
+                setTime_select.value = '下午';
+            }else{
+                setTime_select.value = '上午';
+            }
 
 
         }
@@ -490,8 +498,8 @@
         }
 
         function padToTwoDigits(number) {
-    return number < 10 ? '0' + number : String(number);
-}
+            return number < 10 ? '0' + number : String(number);
+        }
 
 
 
@@ -642,7 +650,7 @@
         function removeBtn(id, el) {
             let todoList = getLocalItem();
 
-      
+
             let todoItemIdx;
             const todoItem = todoList.find((array, idx) => {
                 if (array[0].id === id) {

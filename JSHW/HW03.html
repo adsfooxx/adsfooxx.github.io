@@ -477,14 +477,14 @@
             input_D.value = d;
 
             const now = new Date();
-            let now_h= now.getHours();
+            let now_h = now.getHours();
             setTime_select.value = '下午';
             input_min.value = now.getMinutes();
             if (now_h >= 12) {
-                input_hours.value = now.getHours()-12;
+                input_hours.value = now.getHours() - 12;
                 input_hours -= 12;
                 setTime_select.value = '下午';
-            }else{
+            } else {
                 setTime_select.value = '上午';
             }
 
@@ -522,7 +522,9 @@
             todoList.push(todoItem);
             setLocal(todoList);
         }
-
+        function removeFirstNChars(str, n) {
+            return str.substring(n);
+        }
 
         function getDays(M) {
 
@@ -643,7 +645,8 @@
             const input = el.parentElement.querySelector('.input');
             input.classList.remove('d-none');
             const p = el.parentElement.querySelector('.listP');
-            input.value = p.textContent;
+
+            input.value = removeFirstNChars(p.textContent,8);
             p.classList.add("d-none");
             el.classList.add("d-none");
         }

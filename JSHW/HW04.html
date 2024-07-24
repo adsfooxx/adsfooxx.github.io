@@ -58,6 +58,10 @@
             color: #BBB;
         }
 
+        .colorP {
+            font-size: 16px;
+        }
+
         .bot {
             margin-top: 50px;
         }
@@ -78,8 +82,8 @@
 
 
 
+    <div id="app" class="container ">
 
-    <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Mock Apple Shop</a>
@@ -90,29 +94,38 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
 
                     <!-- btn-outline-secondary -->
-                    <input type="radio" class="btn-check" name="top" id="top1" autocomplete="off">
+                    <input type="radio" class="btn-check" name="top" id="top1" autocomplete="off"
+                        value="iPhone 14 Pro Max" checked v-model="topcheck">
                     <label class="btn top-btn" for="top1">
                         <p>iPhone 14 Pro Max</p>
                     </label>
-                    <input type="radio" class="btn-check" name="top" id="top2" autocomplete="off">
+                    <input type="radio" class="btn-check" name="top" id="top2" autocomplete="off" value="iPhone 14"
+                        v-model="topcheck">
                     <label class="btn top-btn" for="top2">
                         <p>iPhone 14</p>
                     </label>
-                    <input type="radio" class="btn-check" name="top" id="top3" autocomplete="off">
+                    <input type="radio" class="btn-check" name="top" id="top3" autocomplete="off" value="iPad"
+                        v-model="topcheck">
                     <label class="btn top-btn" for="top3">
-                        <p>iPhone 14 Pro Max</p>
+                        <p>iPad</p>
                     </label>
 
 
                 </div>
             </div>
         </nav>
-    </header>
 
-    <div class="container ">
+        <!--  -->
+
+
+
         <div class="row">
-            <h1>購買 iPhone14</h1>
-            <p>NT$34,900起</p>
+            <h1>購買 {{topcheck}}</h1>
+            <template v-for="iphone in iphoneList">
+                <template v-if="iphone.page==nowpage&&iphone.name===topcheck">
+                    <p>NT${{iphone.b128}}起</p>
+                </template>
+            </template>
         </div>
         <div class="row">
 
@@ -120,17 +133,26 @@
 
                 <div id="carouselExample" class="carousel slide position-sticky">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
 
-                            <img src="https://picsum.photos/300/200/?random=10" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://picsum.photos/300/200/?random=11" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://picsum.photos/300/200/?random=13" class="d-block w-100" alt="...">
-                        </div>
+                        <template v-for="img in imageList">
+                            <template v-if="img.color == cellphoneColor">
+                                <div class="carousel-item active">
+
+                                    <img :src='img.img1' class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img :src="img.img2" class="d-block w-100" alt="...">
+                                </div>
+                                <template v-if="img.color !='none'">
+                                    <div class="carousel-item">
+                                        <img :src="img.img3" class="d-block w-100" alt="...">
+                                    </div>
+                                </template>
+                            </template>
+                        </template>
                     </div>
+
+                    <!--  -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -152,44 +174,88 @@
                     </div>
                     <div class="row  flex-wrap gap-3 mx-auto btnBox
                     p-0">
-                        <input type="radio" class="btn-check " name="type" id="type1" autocomplete="off">
+                        <template v-for="iphone in iphoneList">
+                            <template v-if="iphone.page==nowpage">
+
+                                <input type="radio" class="btn-check" name="type" :id="iphone.name" autocomplete="off"
+                                    :value="iphone.name" v-model="nowchecktype">
+                                <label class="btn btn-outline-secondary " :for="iphone.name">
+                                    <p>{{iphone.name}}</p>
+                                    <p>NT${{iphone.b128}} 起</p>
+                                </label>
+                            </template>
+                        </template>
+
+
+
+                        <!-- <input type="radio" class="btn-check " name="type" id="type1" autocomplete="off"
+                            value="view101" v-model="typechange">
                         <label class="btn btn-outline-secondary " for="type1">
                             <p>iPhone 14 Pro</p>
                             <p>NT$ 34,900 起</p>
                         </label>
 
-                        <input type="radio" class="btn-check" name="type" id="type2" autocomplete="off">
+                        <input type="radio" class="btn-check" name="type" id="type2" autocomplete="off"
+                            value="iPhone 14 Pro Max" v-model="typechange">
                         <label class="btn btn-outline-secondary" for="type2">
                             <p>iPhone 14 Pro Max</p>
                             <p>NT$ 38,900 起</p>
-                        </label>
+                        </label> -->
                     </div>
                 </div>
                 <div class="title">
                     <span class="title">外觀</span>
                     <span class="p">挑選你喜愛的外觀</span>
+                    <p class="colorP">顏色:{{cellphoneColor}}</p>
                 </div>
                 <div class="row  flex-wrap gap-2 mx-auto btn4 col
                 ">
-                    <input type="radio" class="btn-check" name="color" id="color1" autocomplete="off">
-                    <label class="btn btn-outline-secondary w-45" for="color1">
-                        <div class="color" style="background-color: #696071;"></div>
-                    </label>
+                    <template v-for="iphone in iphoneList">
+                        <template v-if="iphone.name==topcheck && iphone.color>=4">
+                            <input type="radio" class="btn-check" name="color" id="color1" autocomplete="off" value="紫色"
+                                v-model="cellphoneColor">
+                            <label class="btn btn-outline-secondary w-45" for="color1">
+                                <div class="color" style="background-color: #696071;"></div>
+                            </label>
 
-                    <input type="radio" class="btn-check " name="color" id="color2" autocomplete="off">
-                    <label class="btn btn-outline-secondary w-45" for="color2">
-                        <div class="color" style=" background-color: #F4E8CE;"></div>
-                    </label>
+                            <input type="radio" class="btn-check " name="color" id="color2" autocomplete="off"
+                                value="淺藍色" v-model="cellphoneColor">
+                            <label class="btn btn-outline-secondary w-45" for="color2">
+                                <div class="color" style=" background-color: #beccda;"></div>
+                            </label>
 
-                    <input type="radio" class="btn-check " name="color" id="color3" autocomplete="off">
-                    <label class="btn btn-outline-secondary w-45" for="color3">
-                        <div class="color" style=" background-color: #F1F3F2;"></div>
-                    </label>
+                            <input type="radio" class="btn-check " name="color" id="color3" autocomplete="off"
+                                value="銀色" v-model="cellphoneColor">
+                            <label class="btn btn-outline-secondary w-45" for="color3">
+                                <div class="color" style=" background-color: #F1F3F2;"></div>
+                            </label>
 
-                    <input type="radio" class="btn-check" name="color" id="color4" autocomplete="off">
-                    <label class="btn btn-outline-secondary w-45" for="color4">
-                        <div class="color" style=" background-color: #535150;"></div>
-                    </label>
+                            <input type="radio" class="btn-check" name="color" id="color4" autocomplete="off"
+                                value="太空黑色" v-model="cellphoneColor">
+                            <label class="btn btn-outline-secondary w-45" for="color4">
+                                <div class="color" style=" background-color: #535150;"></div>
+                            </label>
+                        </template></template>
+
+                    <template v-for="iphone in iphoneList">
+                        <template v-if="iphone.name==topcheck && iphone.color==6">
+
+                            <input type="radio" class="btn-check" name="color" id="color5" autocomplete="off" value="紅色"
+                                v-model="cellphoneColor">
+                            <label class="btn btn-outline-secondary w-45" for="color5">
+                                <div class="color" style="background-color: #fc1b39;"></div>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="color" id="color6" autocomplete="off" value="黃色"
+                                v-model="cellphoneColor">
+                            <label class="btn btn-outline-secondary w-45" for="color6">
+                                <div class="color" style="background-color: #f1f492;"></div>
+                            </label>
+
+                        </template></template>
+
+
+
                 </div>
                 <!--  -->
                 <div class="title">
@@ -199,57 +265,101 @@
 
                 <div class="row  flex-wrap gap-3 mx-auto btnBox
                 ">
-                    <input type="radio" class="btn-check" name="large" id="large1" autocomplete="off">
-                    <label class="btn btn-outline-secondary " for="large1">
-                        <p>128GB</p>
-                        <p>NT$ 38,900 起</p>
-                    </label>
 
-                    <input type="radio" class="btn-check " name="large" id="large2" autocomplete="off">
-                    <label class="btn btn-outline-secondary " for="large2">
-                        <p>256GB</p>
-                        <p>NT$ 42,400 起</p>
-                    </label>
+                    <template v-for="iphone in iphoneList">
+                        <template v-if="iphone.name==nowchecktype && iphone.type==4">
 
-                    <input type="radio" class="btn-check " name="large" id="large3" autocomplete="off">
-                    <label class="btn btn-outline-secondary " for="large3">
-                        <p>512GB</p>
-                        <p>NT$ 49,400 起</p>
-                    </label>
 
-                    <input type="radio" class="btn-check" name="large" id="large4" autocomplete="off">
-                    <label class="btn btn-outline-secondary " for="large4">
-                        <p>1TB</p>
-                        <p>NT$ 56,400 起</p>
-                    </label>
+                            <input type="radio" class="btn-check" name="large" id="large1" autocomplete="off"
+                                value="128GB" v-model="cellphoneByte" @click="changePrime(iphone.b128)">
+                            <label class="btn btn-outline-secondary " for="large1">
+                                <p>128GB</p>
+                                <p>NT$ {{iphone.b128}} 起</p>
+                            </label>
+
+                            <input type="radio" class="btn-check " name="large" id="large2" autocomplete="off"
+                                value="256GB" v-model="cellphoneByte" @click="changePrime(iphone.b256)">
+                            <label class="btn btn-outline-secondary " for="large2">
+                                <p>256GB</p>
+                                <p>NT$ {{iphone.b256}} 起</p>
+                            </label>
+
+                            <input type="radio" class="btn-check " name="large" id="large3" autocomplete="off"
+                                value="512GB" v-model="cellphoneByte" @click="changePrime(iphone.b512)">
+                            <label class="btn btn-outline-secondary " for="large3">
+                                <p>512GB</p>
+                                <p>NT$ {{iphone.b512}} 起</p>
+                            </label>
+
+                            <input type="radio" class="btn-check" name="large" id="large4" autocomplete="off"
+                                value="1TB" v-model="cellphoneByte" @click="changePrime(iphone.b1024)">
+                            <label class="btn btn-outline-secondary " for="large4">
+                                <p>1TB</p>
+                                <p>NT$ {{iphone.b1024}} 起</p>
+                            </label>
+                        </template></template>
+
+
+
+                    <template v-for="iphone in iphoneList">
+                        <template v-if="iphone.name==nowchecktype && iphone.type==3">
+
+                            <input type="radio" class="btn-check" name="large" id="large1" autocomplete="off"
+                                value="128GB" v-model="cellphoneByte" @click="changePrime(iphone.b128)">
+                            <label class="btn btn-outline-secondary " for="large1">
+                                <p>128GB</p>
+                                <p>NT$ {{iphone.b128}} 起</p>
+                            </label>
+
+                            <input type="radio" class="btn-check " name="large" id="large2" autocomplete="off"
+                                value="256GB" v-model="cellphoneByte" @click="changePrime(iphone.b256)">
+                            <label class="btn btn-outline-secondary " for="large2">
+                                <p>256GB</p>
+                                <p>NT$ {{iphone.b256}} 起</p>
+                            </label>
+
+                            <input type="radio" class="btn-check " name="large" id="large3" autocomplete="off"
+                                value="512GB" v-model="cellphoneByte" @click="changePrime(iphone.b512)">
+                            <label class="btn btn-outline-secondary " for="large3">
+                                <p>512GB</p>
+                                <p>NT$ {{iphone.b512}} 起</p>
+                            </label>
+
+                        </template></template>
+
                 </div>
 
 
 
             </div>
         </div>
-
-        <div class="buydiv col-12 bot">
+        <!-- <button @click="click">aa</button> -->
+        <div class="buydiv col-12 bot" v-if="botdisplay==true">
             <div class="row">
                 <div class="col-12 col-md-4">
                     <div class="title">
-                        <p class="title">您的全新<br>{{手ㄐ}}</p>
+                        <p class="title">您的全新<br>{{nowchecktype}}</p>
                         <span class="p">依你的需求量身打造。</span>
                     </div>
                     <div class="pic">
-                        <img src="" alt="">
+                        <template v-for="img in imageList">
+                            <template v-if="img.color == cellphoneColor">
+                                        <img :src="img.img3" class="d-block w-100" alt="...">
+                            </template>
+                        </template>
                     </div>
                 </div>
                 <div class="col-12 col-md-5 txtbox">
                     <div class="txt">
-                        <p>{{手機}}{{容量}}{{顏色}}</p>
-                        <p>{{價格}}</p>
+                        <p>{{nowchecktype}} {{cellphoneByte}} {{cellphoneColor}}</p>
+                        <p>{{cellphonePrime}}</p>
                     </div>
                     <hr>
                     <div class="txt">
                         <p>需要一點時間嗎？</p>
                         <p>將這部裝置收藏到「你的收藏」，即可保留你選擇的所有配置，你可以隨時從上次離開處接續進行。</p>
                     </div>
+                    <hr>
                     <div class="txt">
                         <p>你所在地區的運送詳細資訊將在「結帳」顯示。</p>
                     </div>
@@ -260,7 +370,9 @@
                     </div>
 
                     <p>今天，地點：Apple 台北101</p>
-                    <a href="#"><p>查看其他直營店</p> </a>
+                    <a href="#">
+                        <p>查看其他直營店</p>
+                    </a>
                     <button type="button" class="btn btn-primary buy-btn">加入購物車</button>
                 </div>
             </div>
@@ -369,6 +481,149 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const botbox = document.querySelector(".buydiv");
+
+
+
+        const { createApp } = Vue;
+
+        const app = createApp({
+            data: function () {
+                return {
+                    topcheck: "iPhone 14 Pro",
+                    nowchecktype: 'iPhone 14 Pro',
+                    typechange: '',
+                    cellphoneColor: 'none',
+                    cellphoneByte: '',
+                    cellphonePrime: 0,
+                    botdisplay: false,
+                    nowpage: 1,
+                    imageList: [{
+                        color: "none",
+                        img1: "../img/apple/iphone-14-all.webp",
+                        img2: "../img/apple/iphone-14.webp",
+
+                    }, {
+                        // black
+                        color: "太空黑色",
+                        img1: "../img/apple/iphone-14-black-1.webp",
+                        img2: "../img/apple/iphone-14-black-2.webp",
+                        img3: "../img/apple/iphone-14-black-3.webp",
+                    }, {
+                        // blue
+                        color: "淺藍色",
+                        img1: "../img/apple/iphone-14-blue-1.webp",
+                        img2: "../img/apple/iphone-14-blue-2.webp",
+                        img3: "../img/apple/iphone-14-blue-3.webp",
+                    }, {
+                        // purple
+                        color: "紫色",
+                        img1: "../img/apple/iphone-14-purple-1.webp",
+                        img2: "../img/apple/iphone-14-purple-2.webp",
+                        img3: "../img/apple/iphone-14-purple-3.webp",
+                    }, {
+                        // slive
+                        color: "銀色",
+                        img1: "../img/apple/iphone-14-slive-1.webp",
+                        img2: "../img/apple/iphone-14-slive-2.webp",
+                        img3: "../img/apple/iphone-14-slive-3.webp",
+                    }, {
+                        // red
+                        color: "紅色",
+                        img1: "../img/apple/iphone-14-red-1.webp",
+                        img2: "../img/apple/iphone-14-red-2.webp",
+                        img3: "../img/apple/iphone-14-red-3.webp",
+
+                    }, {
+                        // yellow
+                        color: "黃色",
+                        img1: "../img/apple/iphone-14-yellow-1.webp",
+                        img2: "../img/apple/iphone-14-yellow-2.webp",
+                        img3: "../img/apple/iphone-14-yellow-3.webp",
+                    }
+
+                    ],
+
+                    iphoneList: [{
+                        // i14P
+                        page: 1,
+                        name: 'iPhone 14 Pro',
+                        color: 4,
+                        type: 4,
+                        b128: 34900,
+                        b256: 38400,
+                        b512: 45400,
+                        b1024: 52400
+                    }, {
+                        // 
+                        page: 1,
+                        name: 'iPhone 14 Pro Max',
+                        color: 4,
+                        type: 4,
+                        b128: 38900,
+                        b256: 42400,
+                        b512: 49400,
+                        b1024: 56400
+                    }, {
+                        // 
+                        page: 2,
+                        name: 'iPhone 14',
+                        color: 6,
+                        type: 3,
+                        b128: 27900,
+                        b256: 31400,
+                        b512: 38400
+                    }, {
+                        // 
+                        page: 2,
+                        name: 'iPhone 14 plus',
+                        color: 6,
+                        type: 3,
+                        b128: 31900,
+                        b256: 35400,
+                        b512: 42400
+                    }],
+                    // view101: 'iPhone 14 Pro',
+                    view101P: 34900,
+                    // view102: iphoneList[1].name,
+                    // view102P: iphoneList[1].b128,
+                }
+            }, methods: {
+
+                changePrime(prime) {
+                    this.cellphonePrime = Number(prime);
+
+                },
+            }, computed: {
+
+            }, watch: {
+                'cellphoneByte'() {
+                    if (this.nowchecktype && this.cellphoneColor && this.cellphoneByte) {
+                        return this.botdisplay = true;
+                        console.log(this.cellphonePrime)
+                    } else {
+                        return this.botdisplay = false;
+                    }
+                }, "topcheck"() {
+                    if (this.topcheck === 'iPhone 14 Pro Max') {
+                        this.nowpage = 1;
+                        this.nowchecktype = 'iPhone 14 Pro Max';
+                    }
+                    if (this.topcheck === 'iPhone 14') {
+                        this.nowpage = 2;
+                        this.nowchecktype = 'iPhone 14';
+                    }
+                    this.cellphoneColor = "none";
+                    this.botdisplay = false;
+                }
+            }
+        });
+        app.mount('#app');
+
+
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <button id="start"> start 120</button>
+    <button id="start2"> start 180</button>
+    <button id="re">remove</button>
+    <span>還有</span>
+    <span id="sp"></span>
+    <audio src="../sound/pickup02.mp3" id="coin1"></audio>
+
+    <script>
+        const startBtn = document.querySelector('#start');
+        const startBtn2 = document.querySelector('#start2');
+        const removeBtn = document.querySelector('#re');
+        const coin1 = document.querySelector('#coin1');
+
+        let interval; let type = "";
+        let countdownTime = 0;
+
+        const sp = document.querySelector('#sp');
+
+
+        startBtn.addEventListener('click', () => {
+            countdownTime = 10;
+            type = "120";
+            if (!interval) {
+                interval = setInterval(() => {
+                    countdownTime--;
+                    updateTimer();
+                    if (countdownTime <= 0) {
+                        countdownTime = 120;
+                        coin1.play();
+                    }
+                }, 1000);
+            }
+        })
+
+
+        startBtn2.addEventListener('click', () => {
+            countdownTime = 180;
+            type = "180";
+            if (!interval) {
+                interval = setInterval(() => {
+                    countdownTime--;
+                    updateTimer();
+                    if (countdownTime <= 0) {
+                        countdownTime = 180;
+
+                    }
+
+                }, 1000);
+            }
+        })
+
+
+
+        removeBtn.addEventListener('click', () => {
+            clearInterval(interval);
+            interval = '';
+            type = "";
+            countdownTime = 0;
+            updateTimer();
+        })
+
+        function updateTimer() {
+            sp.textContent = `${countdownTime}`;
+
+
+        }
+        updateTimer()
+
+    </script>
+
+</body>
+
+</html>

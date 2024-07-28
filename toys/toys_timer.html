@@ -31,14 +31,14 @@
 
         startBtn.addEventListener('click', () => {
 
-            type = "100";
+            type = "120";
             if (!interval) {
-                countdownTime = 120;
+                countdownTime = 100;
                 interval = setInterval(() => {
                     countdownTime--;
                     updateTimer();
                     if (countdownTime <= 0) {
-                        countdownTime = 120;
+                        countdownTime = 100;
                         coin1.play();
                     }
                 }, 1000);
@@ -47,15 +47,15 @@
 
 
         startBtn2.addEventListener('click', () => {
-            type = "160";
+            type = "180";
             if (!interval) {
                 
-            countdownTime = 180;
+            countdownTime = 160;
                 interval = setInterval(() => {
                     countdownTime--;
                     updateTimer();
                     if (countdownTime <= 0) {
-                        countdownTime = 180;
+                        countdownTime = 160;
 
                         coin1.play();
                     }

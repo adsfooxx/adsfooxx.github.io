@@ -9,15 +9,28 @@
 
 <body>
 
+    <div>
+        <button id="start"> start 120</button>
+        <button id="start2"> start 180</button>
+        <button id="re">remove</button>
+        <span>還有</span>
+        <span id="sp"></span>
+        <audio src="../sound/pickup02.mp3" id="coin1"></audio>
+    </div>
+    <br>
+    <div class="counter-container">
+        <button id="decrease">-</button>
+        <input type="number" id="counter" value="0" />
+        <button id="increase">+</button>
+    </div>
 
-    <button id="start"> start 120</button>
-    <button id="start2"> start 180</button>
-    <button id="re">remove</button>
-    <span>還有</span>
-    <span id="sp"></span>
-    <audio src="../sound/pickup02.mp3" id="coin1"></audio>
+
+
 
     <script>
+        const counterInput = document.getElementById('counter');
+        const increaseButton = document.getElementById('increase');
+        const decreaseButton = document.getElementById('decrease');
         const startBtn = document.querySelector('#start');
         const startBtn2 = document.querySelector('#start2');
         const removeBtn = document.querySelector('#re');
@@ -27,6 +40,15 @@
         let countdownTime = 0;
 
         const sp = document.querySelector('#sp');
+
+        increaseButton.addEventListener('click', () => {
+            counterInput.value = parseInt(counterInput.value) + 1;
+        });
+
+        decreaseButton.addEventListener('click', () => {
+            counterInput.value = parseInt(counterInput.value) - 1;
+        });
+
 
 
         startBtn.addEventListener('click', () => {
@@ -49,8 +71,8 @@
         startBtn2.addEventListener('click', () => {
             type = "180";
             if (!interval) {
-                
-            countdownTime = 160;
+
+                countdownTime = 160;
                 interval = setInterval(() => {
                     countdownTime--;
                     updateTimer();

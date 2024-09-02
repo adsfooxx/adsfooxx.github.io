@@ -5,6 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+
+    <style>
+
+        /*  */
+        .counter-container {
+            display: flex;
+
+            margin-top: 50px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .red-circle {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+/*  */
+
+    </style>
 </head>
 
 <body>
@@ -22,15 +55,14 @@
         <button id="decrease">-</button>
         <input type="number" id="counter" value="0" />
         <button id="increase">+</button>
+        <span id="indicator"></span>
     </div>
 
 
 
 
     <script>
-        const counterInput = document.getElementById('counter');
-        const increaseButton = document.getElementById('increase');
-        const decreaseButton = document.getElementById('decrease');
+
         const startBtn = document.querySelector('#start');
         const startBtn2 = document.querySelector('#start2');
         const removeBtn = document.querySelector('#re');
@@ -41,16 +73,37 @@
 
         const sp = document.querySelector('#sp');
 
+//
+
+const counterInput = document.getElementById('counter');
+        const increaseButton = document.getElementById('increase');
+        const decreaseButton = document.getElementById('decrease');
+        const indicator = document.getElementById('indicator');
+
+        function updateIndicator() {
+            if (parseInt(counterInput.value) === 0) {
+                indicator.innerHTML = '<span class="red-circle"></span>';
+            } else {
+                indicator.innerHTML = '';
+            }
+        }
+
         increaseButton.addEventListener('click', () => {
             counterInput.value = parseInt(counterInput.value) + 1;
+            updateIndicator();
         });
 
         decreaseButton.addEventListener('click', () => {
             counterInput.value = parseInt(counterInput.value) - 1;
+            updateIndicator();
         });
 
+        counterInput.addEventListener('input', updateIndicator);
 
 
+
+
+//
         startBtn.addEventListener('click', () => {
 
             type = "120";

@@ -8,7 +8,11 @@
     <style>
         * {
             --color-green: #39ff14;
-            --color-midcolor: dodgerblue;
+            --color-up: green;
+            --color-down: blue;
+            --color-left: magenta;
+            --color-right: crimson;
+            --font-size: 15px;
             margin: 0;
             padding: 0;
             background-color: black;
@@ -24,7 +28,7 @@
             width: 100%;
             height: 60px;
             position: relative;
-            outline: 1px solid red;
+            outline: 1px solid var(--color-green);
         }
 
         /* header 回合字 */
@@ -101,31 +105,48 @@
 
         }
 
+        /* 箭頭 */
         .arr {
             color: var(--color-midcolor);
+            font-size: var(--font-size);
         }
 
+        .arr_up {
+            color: var(--color-up);
+        }
+
+        .arr_down {
+            color: var(--color-down);
+        }
+
+        .arr_right {
+            color: var(--color-right);
+        }
+
+        .arr_left {
+            color: var(--color-left);
+        }
+
+        .arr_t {
+            color: black;
+        }
+
+        .arr_f {
+            color: red;
+        }
+
+        /* 箭頭到這 */
 
         /* 觸控板 */
         #swipeArea {
             color: var(--color-green);
             width: 100%;
             height: 40%;
-            outline: 1px solid red;
+            outline: 1px solid var(--color-green);
             display: flex;
-            align-items: center;
-            justify-content: center;
             position: absolute;
             bottom: 0;
-        }
-
-        .arr_t {
-            color: var(--color-green);
-        }
-
-        .arr_f {
-            color: red;
-
+            font-size: 15px;
         }
     </style>
 
@@ -143,7 +164,7 @@
         <div class="targetbox" id="arr_box">
             <div class="arr">1</div>
         </div>
-        <div id="swipeArea">觸控</div>
+        <div id="swipeArea">觸控版</div>
         <div class="btn-box" id="btn_box">
             <div class="btn-top">
                 <button id="up" class="btn"></button>
@@ -162,38 +183,45 @@
 
 
     <script>
+
+        const html_playing = document.getElementById("playing");
+
+        const styleSheets = document.styleSheets;
+
         const btn_up = document.getElementById("up");
         const btn_left = document.getElementById("left");
         const btn_right = document.getElementById("right");
         const btn_down = document.getElementById("down");
         const arr_box = document.getElementById("arr_box");
+        const swipeArea = document.getElementById('swipeArea');
+
         const round_text = document.getElementById("round");
         let can_play = true;
         let is_play = true;
         const round_max = 60;
+        let fz = 50;
+        let fz_max = 50;
+        const fz_min = 10;
 
         const switch_btn = document.getElementById("switch_btn");
         const btn_box = document.getElementById("btn_box");
-        const swipe_box = document.getElementById("swipeArea");
-
 
         switch_btn.addEventListener("click", function () {
-            if (swipe_box.style.display === "none") {
-                swipe_box.style.display = "flex"; // 顯示 div1
+            if (swipeArea.style.display === "none") {
+                swipeArea.style.display = "flex"; // 顯示 div1
                 btn_box.style.display = "none";  // 隱藏 div2
             } else {
-                swipe_box.style.display = "none"; // 隱藏 div1
+                swipeArea.style.display = "none"; // 隱藏 div1
                 btn_box.style.display = "block";  // 顯示 div2
             }
         });
-
 
         // GPT 觸控板
         let startX = 0;
         let startY = 0;
         let isDragging = false;
 
-        const swipeArea = document.getElementById('swipeArea');
+
 
         // 函数判断滑动方向
         function detectSwipeDirection(startX, startY, endX, endY) {
@@ -279,47 +307,54 @@
         });
         // GPT方向輸入到這
 
+        // 設定箭頭字體大小
+        function setFontSize(size) {
+            for (let i = 0; i < styleSheets.length; i++) {
+                const rules = styleSheets[i].cssRules || styleSheets[i].rules; // 兼容旧版浏览器
 
+                for (let j = 0; j < rules.length; j++) {
+                    if (rules[j].selectorText === '.arr') {
+                        rules[j].style.fontSize = size + 'px'; // 修改字体大小
+                    }
+                }
+            }
 
-
-
+        }
+        // 設定字體到這
 
         //GPT 遊戲規則
         // 可用的方向
         const directions = ['up', 'down', 'left', 'right'];
-
         // 随机产生方向数组的函数
         function generateDirections(round) {
             let directionArray = [];
             // 第一回合5个方向，每偶数回合增加一个方向
-
             let directionCount = 0;
-
             if (directionCount < round_max) {
                 directionCount = 5 + Math.floor(round / 2);
             }
+            if (fz > fz_min) {
+                fz = fz_max - Math.floor(round / 5)
+            }
+            setFontSize(fz);
+            // 亂數生成方向
             for (let i = 0; i < directionCount; i++) {
                 const randomDirection = directions[Math.floor(Math.random() * directions.length)];
                 directionArray.push(randomDirection);
             }
-
             return directionArray;
         }
-
         // 玩家输入的比对数组
         let playerInputArray = [];
-
         // 比对方向的函数
         function compareDirections(playerDirection, originalArray) {
             playerInputArray.push(playerDirection);
-
             // 如果输入的方向数量大于原数组，则肯定输入错误
             if (playerInputArray.length > originalArray.length) {
                 playerInputArray = [];
                 waitOneSecond(1)
                 return false;
             }
-
             // 检查当前输入是否匹配
             for (let i = 0; i < playerInputArray.length; i++) {
                 if (playerInputArray[i] !== originalArray[i]) {
@@ -328,26 +363,21 @@
                     return false;
                 }
             }
-
             // 如果输入长度和原数组相等，并且全匹配，进入下一回合
             if (playerInputArray.length === originalArray.length) {
                 console.log("Round cleared! Moving to next round...");
                 playerInputArray = [];  // 清空比对数组，为下一回合做准备
                 return true;
             }
-
             return false;
         }
-
         // 示例流程：游戏回合
         let round = 0;
         let currentDirectionArray = generateDirections(round);
-        console.log(`Round ${round}:`, currentDirectionArray);
-
-        // 模拟玩家输入方向
+        // console.log(`Round ${round}:`, currentDirectionArray);
+        // 玩家输入方向
         function simulatePlayerInput(playerDirection) {
             if (is_play === true && can_play === true) {
-
                 const success = compareDirections(playerDirection, currentDirectionArray);
                 display_f5()
                 // 如果匹配成功，进入下一回合
@@ -359,17 +389,13 @@
                 }
             }
         }
-
         //遊戲規則到這
 
         //顯示
-
         function display_f5() {
             round_text.textContent = "回合" + round;
-
             if (is_play === true && can_play === true) {
                 arr_box.innerHTML = '';
-
                 for (let i = 0; i < currentDirectionArray.length; i++) {
                     const newDiv = document.createElement('div'); // 創建新的 div 元素
                     newDiv.classList.add('arr'); // 加入 CSS class
@@ -379,15 +405,19 @@
                     switch (currentDirectionArray[i]) {
                         case "up":
                             newDiv.textContent = "↑";
+                            newDiv.classList.add('arr_up');
                             break;
                         case "down":
                             newDiv.textContent = "↓";
+                            newDiv.classList.add('arr_down');
                             break;
                         case "left":
                             newDiv.textContent = "←";
+                            newDiv.classList.add('arr_left');
                             break;
                         case "right":
                             newDiv.textContent = "→";
+                            newDiv.classList.add('arr_right');
                             break;
                     }
                     arr_box.appendChild(newDiv); // 將新 div 加入容器
@@ -403,14 +433,11 @@
                 children[j].classList.remove('arr_t');
                 children[j].classList.add('arr_f');
             }
-
             can_play = false;
             display_f5()
-
             setTimeout(() => {
                 can_play = true;
                 display_f5()
-
                 console.log("times up")
             }, 1000 * sec); // 1000 毫秒 = 1 秒
         }

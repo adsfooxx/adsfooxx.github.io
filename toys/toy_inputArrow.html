@@ -147,6 +147,7 @@
             position: absolute;
             bottom: 0;
             font-size: 15px;
+            touch-action: none;
         }
     </style>
 
@@ -205,6 +206,11 @@
 
         const switch_btn = document.getElementById("switch_btn");
         const btn_box = document.getElementById("btn_box");
+
+
+        swipeArea.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
 
         switch_btn.addEventListener("click", function () {
             if (swipeArea.style.display === "none") {

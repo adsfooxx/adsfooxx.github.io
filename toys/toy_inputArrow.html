@@ -155,6 +155,63 @@
             font-size: 15px;
             touch-action: none;
         }
+
+        /* 遊戲畫面 */
+        #playing {}
+
+        /* 主選單畫面 */
+        #menu,
+        #stop {
+
+            flex-wrap: wrap;
+            flex-direction: column;
+            height: 100%;
+
+
+        }
+
+        .menu_title {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 70px;
+            font-size: 30px;
+
+        }
+
+        .menu_btn_box {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: auto;
+            height: 70%;
+            width: 20%;
+        }
+
+        .menu_btn {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            width: 100%;
+            height: 15%;
+            border: 1px solid #39ff14;
+        }
+
+        .menu_btn:hover {
+            color: aqua;
+            border: 1px solid aqua;
+
+
+        }
+
+        .menu_close {
+            display: none;
+        }
+
+        .menu_flex {
+            display: flex;
+        }
     </style>
 
 
@@ -162,7 +219,32 @@
 
 <body>
 
-    <div id="playing">
+
+    <div id="menu" class="menu_flex">
+        <div class="menu_title" id="menu_title">?????</div>
+
+        <div class="menu_btn_box">
+            <div class="menu_btn" id="menu_btn_start">開始</div>
+            <div class="menu_btn" id="menu_btn_rank">排名</div>
+            <div class="menu_btn" id="menu_btn_opt">設定</div>
+        </div>
+    </div>
+
+
+    <div id="stop" class=" menu_close">
+        <div class="menu_title" id="menu_title">遊戲暫停</div>
+
+        <div class="menu_btn_box">
+            <div class="menu_btn" id="menu_btn_continue">繼續</div>
+            <div class="menu_btn" id="menu_btn_restart">重來</div>
+            <div class="menu_btn" id="menu_btn_goback">回主畫面</div>
+        </div>
+    </div>
+
+
+
+
+    <div id="playing" class="menu_close">
         <div class="header">
             <div id="round"></div>
             <div class="switch_btn" id="switch_btn"></div>
@@ -189,6 +271,11 @@
     </div>
 
 
+
+
+
+
+
     <script>
 
         const html_playing = document.getElementById("playing");
@@ -202,22 +289,78 @@
         const arr_box = document.getElementById("arr_box");
         const swipeArea = document.getElementById('swipeArea');
 
+        const menu = document.getElementById('menu');
+        const menu_btn_start = document.getElementById('menu_btn_start');
+        const menu_btn_rank = document.getElementById('menu_btn_rank');
+        const menu_btn_opt = document.getElementById('menu_btn_opt');
+
+
+        const stop = document.getElementById('stop');
+        const menu_btn_continue = document.getElementById('menu_btn_continue');
+        const menu_btn_restart = document.getElementById('menu_btn_restart');
+        const menu_btn_goback = document.getElementById('menu_btn_goback');
+
+
+
+
         const round_text = document.getElementById("round");
         let can_play = true;
-        let is_play = true;
+        let is_play = false;
         const round_max = 60;
         let fz = 50;
         let fz_max = 50;
         const fz_min = 10;
 
+        let time_all = 0;
+        let time_thisRound = 0;
+
+
+
+
+
+
         const switch_btn = document.getElementById("switch_btn");
         const btn_box = document.getElementById("btn_box");
+
+        // 選單按鈕從這開始
+        // 切換畫面
+        menu_btn_start.addEventListener('click', function () {
+            menu.classList.add('menu_close');
+            menu.classList.remove('menu_flex');
+            html_playing.classList.remove('menu_close');
+
+            is_play = true;
+            startGame();
+        });
+
+
+
+
+
+
+
+        //選單按鈕 結束
+
+
 
 
         document.addEventListener('touchmove', function (event) {
             event.preventDefault();
         }, { passive: false });
+        btn_up.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+        }, { passive: false });
+        btn_down.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+        }, { passive: false });
+        btn_left.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+        }, { passive: false });
+        btn_right.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+        }, { passive: false });
 
+        //切換按鈕
         switch_btn.addEventListener("click", function () {
             if (swipeArea.style.display === "none") {
                 swipeArea.style.display = "flex"; // 顯示 div1
@@ -339,6 +482,7 @@
         const directions = ['up', 'down', 'left', 'right'];
         // 随机产生方向数组的函数
         function generateDirections(round) {
+
             let directionArray = [];
             // 第一回合5个方向，每偶数回合增加一个方向
             let directionCount = 0;
@@ -348,12 +492,14 @@
             if (fz > fz_min) {
                 fz = fz_max - Math.floor(round / 5)
             }
+
             setFontSize(fz);
             // 亂數生成方向
             for (let i = 0; i < directionCount; i++) {
                 const randomDirection = directions[Math.floor(Math.random() * directions.length)];
                 directionArray.push(randomDirection);
             }
+            display_f5()
             return directionArray;
         }
         // 玩家输入的比对数组
@@ -386,7 +532,15 @@
         // 示例流程：游戏回合
         let round = 0;
         let currentDirectionArray = generateDirections(round);
-        // console.log(`Round ${round}:`, currentDirectionArray);
+        function startGame() {
+
+
+
+            console.log(`Round ${round}:`, currentDirectionArray);
+            display_f5();
+        }
+
+
         // 玩家输入方向
         function simulatePlayerInput(playerDirection) {
             if (is_play === true && can_play === true) {
@@ -453,11 +607,13 @@
                 console.log("times up")
             }, 1000 * sec); // 1000 毫秒 = 1 秒
         }
+
+
         //等到這裡
 
 
 
-        display_f5()
+
     </script>
 
 </body>

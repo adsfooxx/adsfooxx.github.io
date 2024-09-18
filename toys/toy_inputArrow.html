@@ -7,37 +7,74 @@
     <title>Document</title>
     <style>
         * {
+            --color-green: #39ff14;
+            --color-midcolor: dodgerblue;
             margin: 0;
             padding: 0;
+            background-color: black;
+            color: var(--color-green);
         }
+
+
 
         .header {
+
+            display: flex;
             margin: auto;
             width: 100%;
-            height: 150px;
-
-
+            height: 60px;
+            position: relative;
+            outline: 1px solid red;
         }
 
+        /* header 回合字 */
+        .header #round {
+            color: var(--color-green);
+            position: absolute;
+            /* left: 75%; */
+            right: 55px;
+            top: 10px;
+        }
+
+        /* header 切換紐 */
+        .switch_btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-image: url('https://hackmd.io/_uploads/HkpZxZOpR.png');
+            /* background-color: blue; */
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+
+        /* 按鈕 */
         .btn {
-            width: 100px;
+            width: 80px;
             aspect-ratio: 1/1;
             border-radius: 50%;
+            border: 1px solid var(--color-green);
         }
 
+        /* 按鈕箱子 */
         .btn-box {
+
             position: fixed;
             bottom: 3%;
             margin: auto;
             width: 100%;
             max-width: 500px;
+            height: 40%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
 
+            display: none;
+
         }
 
+        /* 按鈕 */
         .btn-top,
         .btn-mid,
         .btn-bot {
@@ -49,85 +86,339 @@
 
         }
 
+        /* 畫面方向箱子 */
         .targetbox {
-            margin: auto;
-            width: 75%;
-            height: 40vw;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            width: 80%;
+            height: 45vh;
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
+            grid-template-columns: repeat(10, 1fr);
             grid-template-rows: repeat(6, 1fr);
             align-items: center;
             justify-items: center;
 
         }
 
-        /* .targetbox>.arr {} */
+        .arr {
+            color: var(--color-midcolor);
+        }
+
+
+        /* 觸控板 */
+        #swipeArea {
+            color: var(--color-green);
+            width: 100%;
+            height: 40%;
+            outline: 1px solid red;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .arr_t {
+            color: var(--color-green);
+        }
+
+        .arr_f {
+            color: red;
+
+        }
     </style>
 
 
 </head>
 
 <body>
-    <div class="header">
 
-    </div>
+    <div id="playing">
+        <div class="header">
+            <div id="round"></div>
+            <div class="switch_btn" id="switch_btn"></div>
 
-
-    <div class="targetbox">
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-        <div class="arr">1</div>
-
-    </div>
-
-
-
-
-
-    <div class="btn-box">
-        <div class="btn-top">
-            <button id="up" class="btn"></button>
         </div>
-        <div class="btn-mid">
-            <button id="left" class="btn"></button>
-            <button id="right" class="btn"></button>
+        <div class="targetbox" id="arr_box">
+            <div class="arr">1</div>
         </div>
-        <div class="btn-bot">
-            <button id="down" class="btn"></button>
+        <div id="swipeArea">觸控</div>
+        <div class="btn-box" id="btn_box">
+            <div class="btn-top">
+                <button id="up" class="btn"></button>
+            </div>
+            <div class="btn-mid">
+                <button id="left" class="btn"></button>
+                <button id="right" class="btn"></button>
+            </div>
+            <div class="btn-bot">
+                <button id="down" class="btn"></button>
+            </div>
+
         </div>
 
     </div>
-
-
 
 
     <script>
+        const btn_up = document.getElementById("up");
+        const btn_left = document.getElementById("left");
+        const btn_right = document.getElementById("right");
+        const btn_down = document.getElementById("down");
+        const arr_box = document.getElementById("arr_box");
+        const round_text = document.getElementById("round");
+        let can_play = true;
+        let is_play = true;
+        const round_max = 60;
+
+        const switch_btn = document.getElementById("switch_btn");
+        const btn_box = document.getElementById("btn_box");
+        const swipe_box = document.getElementById("swipeArea");
+
+
+        switch_btn.addEventListener("click", function () {
+            if (swipe_box.style.display === "none") {
+                swipe_box.style.display = "flex"; // 顯示 div1
+                btn_box.style.display = "none";  // 隱藏 div2
+            } else {
+                swipe_box.style.display = "none"; // 隱藏 div1
+                btn_box.style.display = "block";  // 顯示 div2
+            }
+        });
+
+
+        // GPT 觸控板
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+
+        const swipeArea = document.getElementById('swipeArea');
+
+        // 函数判断滑动方向
+        function detectSwipeDirection(startX, startY, endX, endY) {
+            const diffX = endX - startX;
+            const diffY = endY - startY;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // 左右滑动
+                if (diffX > 0) {
+                    simulatePlayerInput('right');
+                } else {
+                    simulatePlayerInput('left');
+                }
+            } else {
+                // 上下滑动
+                if (diffY > 0) {
+                    simulatePlayerInput('down');
+                } else {
+                    simulatePlayerInput('up');
+                }
+            }
+        }
+        // 触控事件处理
+        swipeArea.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+        swipeArea.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const endY = e.changedTouches[0].clientY;
+            detectSwipeDirection(startX, startY, endX, endY);
+        });
+        // 鼠标事件处理
+        swipeArea.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const endX = e.clientX;
+            const endY = e.clientY;
+        });
+        document.addEventListener('mouseup', (e) => {
+            if (isDragging) {
+                const endX = e.clientX;
+                const endY = e.clientY;
+                detectSwipeDirection(startX, startY, endX, endY);
+                isDragging = false;
+            }
+        });
+        //鍵盤方向鍵
+        document.addEventListener('keydown', function (event) {
+            switch (event.key) {
+                case "ArrowUp":
+                    simulatePlayerInput('up');
+                    break;
+                case "ArrowDown":
+                    simulatePlayerInput('down');
+                    break;
+                case "ArrowLeft":
+                    simulatePlayerInput('left');
+                    break;
+                case "ArrowRight":
+                    simulatePlayerInput('right');
+                    break;
+                default:
+                    console.log("按下了其他按键: " + event.key);
+            }
+        });
+        //按鈕事件處理
+        btn_up.addEventListener("click", function () {
+            simulatePlayerInput('up');
+        });
+        btn_down.addEventListener("click", function () {
+            simulatePlayerInput('down');
+        });
+        btn_left.addEventListener("click", function () {
+            simulatePlayerInput('left');
+        });
+        btn_right.addEventListener("click", function () {
+            simulatePlayerInput('right');
+        });
+        // GPT方向輸入到這
 
 
 
 
-        //  U L R D
-        function craftArr(F) {
 
 
+        //GPT 遊戲規則
+        // 可用的方向
+        const directions = ['up', 'down', 'left', 'right'];
 
+        // 随机产生方向数组的函数
+        function generateDirections(round) {
+            let directionArray = [];
+            // 第一回合5个方向，每偶数回合增加一个方向
+
+            let directionCount = 0;
+
+            if (directionCount < round_max) {
+                directionCount = 5 + Math.floor(round / 2);
+            }
+            for (let i = 0; i < directionCount; i++) {
+                const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+                directionArray.push(randomDirection);
+            }
+
+            return directionArray;
         }
 
+        // 玩家输入的比对数组
+        let playerInputArray = [];
 
+        // 比对方向的函数
+        function compareDirections(playerDirection, originalArray) {
+            playerInputArray.push(playerDirection);
+
+            // 如果输入的方向数量大于原数组，则肯定输入错误
+            if (playerInputArray.length > originalArray.length) {
+                playerInputArray = [];
+                waitOneSecond(1)
+                return false;
+            }
+
+            // 检查当前输入是否匹配
+            for (let i = 0; i < playerInputArray.length; i++) {
+                if (playerInputArray[i] !== originalArray[i]) {
+                    playerInputArray = [];  // 输入错误，清空比对数组
+                    waitOneSecond(1)
+                    return false;
+                }
+            }
+
+            // 如果输入长度和原数组相等，并且全匹配，进入下一回合
+            if (playerInputArray.length === originalArray.length) {
+                console.log("Round cleared! Moving to next round...");
+                playerInputArray = [];  // 清空比对数组，为下一回合做准备
+                return true;
+            }
+
+            return false;
+        }
+
+        // 示例流程：游戏回合
+        let round = 0;
+        let currentDirectionArray = generateDirections(round);
+        console.log(`Round ${round}:`, currentDirectionArray);
+
+        // 模拟玩家输入方向
+        function simulatePlayerInput(playerDirection) {
+            if (is_play === true && can_play === true) {
+
+                const success = compareDirections(playerDirection, currentDirectionArray);
+                display_f5()
+                // 如果匹配成功，进入下一回合
+                if (success) {
+                    round++;
+                    currentDirectionArray = generateDirections(round);
+                    console.log(`Round ${round}:`, currentDirectionArray);
+                    display_f5()
+                }
+            }
+        }
+
+        //遊戲規則到這
+
+        //顯示
+
+        function display_f5() {
+            round_text.textContent = "回合" + round;
+
+            if (is_play === true && can_play === true) {
+                arr_box.innerHTML = '';
+
+                for (let i = 0; i < currentDirectionArray.length; i++) {
+                    const newDiv = document.createElement('div'); // 創建新的 div 元素
+                    newDiv.classList.add('arr'); // 加入 CSS class
+                    if (playerInputArray[i] != undefined && playerInputArray[i] === currentDirectionArray[i]) {
+                        newDiv.classList.add('arr_t');
+                    }
+                    switch (currentDirectionArray[i]) {
+                        case "up":
+                            newDiv.textContent = "↑";
+                            break;
+                        case "down":
+                            newDiv.textContent = "↓";
+                            break;
+                        case "left":
+                            newDiv.textContent = "←";
+                            break;
+                        case "right":
+                            newDiv.textContent = "→";
+                            break;
+                    }
+                    arr_box.appendChild(newDiv); // 將新 div 加入容器
+                }
+            }
+        }
+        //顯示到這
+
+        //等候時間
+        function waitOneSecond(sec) {
+            const children = arr_box.children;
+            for (let j = 0; j < children.length; j++) {
+                children[j].classList.remove('arr_t');
+                children[j].classList.add('arr_f');
+            }
+
+            can_play = false;
+            display_f5()
+
+            setTimeout(() => {
+                can_play = true;
+                display_f5()
+
+                console.log("times up")
+            }, 1000 * sec); // 1000 毫秒 = 1 秒
+        }
+        //等到這裡
+
+
+
+        display_f5()
     </script>
 
 </body>

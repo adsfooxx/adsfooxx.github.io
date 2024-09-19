@@ -97,15 +97,16 @@
         }
 
         /* 畫面方向箱子 */
+
         .targetbox {
             margin-left: auto;
             margin-right: auto;
             margin-top: 5px;
-            width: 80%;
+            width: 95%;
             height: 45vh;
             display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            grid-template-rows: repeat(6, 1fr);
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(5, 1fr);
             align-items: center;
             justify-items: center;
 
@@ -147,7 +148,7 @@
         #swipeArea {
             color: var(--color-green);
             width: 100%;
-            height: 40%;
+            height: 37%;
             outline: 1px solid var(--color-green);
             display: flex;
             position: absolute;
@@ -306,7 +307,9 @@
         const round_text = document.getElementById("round");
         let can_play = true;
         let is_play = false;
-        const round_max = 60;
+        
+        let round = 0;
+        const round_max = 40;
         let fz = 50;
         let fz_max = 50;
         const fz_min = 10;
@@ -486,8 +489,9 @@
             let directionArray = [];
             // 第一回合5个方向，每偶数回合增加一个方向
             let directionCount = 0;
-            if (directionCount < round_max) {
-                directionCount = 5 + Math.floor(round / 2);
+            directionCount = 5 + Math.floor(round / 2);
+            if (directionCount > round_max) {
+                directionCount = round_max;
             }
             if (fz > fz_min) {
                 fz = fz_max - Math.floor(round / 5)
@@ -530,7 +534,6 @@
             return false;
         }
         // 示例流程：游戏回合
-        let round = 0;
         let currentDirectionArray = generateDirections(round);
         function startGame() {
 

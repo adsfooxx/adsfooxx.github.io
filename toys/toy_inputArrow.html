@@ -453,16 +453,20 @@
         //按鈕事件處理
         btn_up.addEventListener("click", function () {
             simulatePlayerInput('up');
-        });
+            event.preventDefault();
+        }, { passive: false });
         btn_down.addEventListener("click", function () {
             simulatePlayerInput('down');
-        });
+            event.preventDefault();
+        }, { passive: false });
         btn_left.addEventListener("click", function () {
             simulatePlayerInput('left');
-        });
+            event.preventDefault();
+        }, { passive: false });
         btn_right.addEventListener("click", function () {
-            simulatePlayerInput('right');
-        });
+            simulatePlayerInput('right'); 
+            event.preventDefault();
+        }, { passive: false });
         // GPT方向輸入到這
 
         // 設定箭頭字體大小

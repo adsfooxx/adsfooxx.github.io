@@ -8,7 +8,6 @@
 
 
     <style>
-
         /*  */
         .counter-container {
             display: flex;
@@ -35,14 +34,15 @@
             background-color: red;
             border-radius: 50%;
         }
-/*  */
 
+        /*  */
     </style>
 </head>
 
 <body>
 
     <div>
+        <button id="start3"> start 15</button>
         <button id="start"> start 120</button>
         <button id="start2"> start 180</button>
         <button id="re">remove</button>
@@ -63,6 +63,7 @@
 
     <script>
 
+        const startBtn3 = document.querySelector('#start3');
         const startBtn = document.querySelector('#start');
         const startBtn2 = document.querySelector('#start2');
         const removeBtn = document.querySelector('#re');
@@ -73,9 +74,9 @@
 
         const sp = document.querySelector('#sp');
 
-//
+        //
 
-const counterInput = document.getElementById('counter');
+        const counterInput = document.getElementById('counter');
         const increaseButton = document.getElementById('increase');
         const decreaseButton = document.getElementById('decrease');
         const indicator = document.getElementById('indicator');
@@ -103,7 +104,7 @@ const counterInput = document.getElementById('counter');
 
 
 
-//
+        //
         startBtn.addEventListener('click', () => {
 
             type = "120";
@@ -138,7 +139,21 @@ const counterInput = document.getElementById('counter');
                 }, 1000);
             }
         })
+        startBtn3.addEventListener('click', () => {
 
+            type = "120";
+            if (!interval) {
+                countdownTime = 15;
+                interval = setInterval(() => {
+                    countdownTime--;
+                    updateTimer();
+                    if (countdownTime <= 0) {
+                        countdownTime = 15;
+                        coin1.play();
+                    }
+                }, 1000);
+            }
+        })
 
 
         removeBtn.addEventListener('click', () => {

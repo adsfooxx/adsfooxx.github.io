@@ -143,12 +143,12 @@
 
             type = "120";
             if (!interval) {
-                countdownTime = 15;
+                countdownTime = 20;
                 interval = setInterval(() => {
                     countdownTime--;
                     updateTimer();
                     if (countdownTime <= 0) {
-                        countdownTime = 15;
+                        countdownTime = 20;
                         coin1.play();
                     }
                 }, 1000);

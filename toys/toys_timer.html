@@ -42,13 +42,15 @@
 <body>
 
     <div>
-        <button id="start3"> start 15</button>
+        <button id="start3"> 1 S</button>
         <button id="start"> start 120</button>
         <button id="start2"> start 180</button>
         <button id="re">remove</button>
         <span>還有</span>
         <span id="sp"></span>
         <audio src="../sound/pickup02.mp3" id="coin1"></audio>
+        <audio src="../sound/mobile_phone_O_By_taira.mp3" id="sound_sec"></audio>
+        <input type="range" id="sound_controller" min="0" max="1" step="0.01" value="0.5">
     </div>
     <br>
     <div class="counter-container">
@@ -62,7 +64,8 @@
 
 
     <script>
-
+        const sound_sec = document.querySelector("#sound_sec");
+        const sound_controller = document.querySelector("#sound_controller");
         const startBtn3 = document.querySelector('#start3');
         const startBtn = document.querySelector('#start');
         const startBtn2 = document.querySelector('#start2');
@@ -75,7 +78,13 @@
         const sp = document.querySelector('#sp');
 
         //
+        sound_controller.addEventListener('input', function() {
+            sound_sec.volume = this.value;
+});
 
+
+
+        //
         const counterInput = document.getElementById('counter');
         const increaseButton = document.getElementById('increase');
         const decreaseButton = document.getElementById('decrease');
@@ -141,15 +150,15 @@
         })
         startBtn3.addEventListener('click', () => {
 
-            type = "15";
+            type = "1";
             if (!interval) {
-                countdownTime = 15;
+                countdownTime = 1;
                 interval = setInterval(() => {
                     countdownTime--;
                     updateTimer();
                     if (countdownTime <= 0) {
-                        countdownTime = 15;
-                        coin1.play();
+                        countdownTime = 1;
+                        sound_sec.play();
                     }
                 }, 1000);
             }

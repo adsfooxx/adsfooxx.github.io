@@ -2,59 +2,38 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <title>Collabora 文件編輯器</title>
+  <title>Collabora 測試</title>
   <style>
-    body, html {
+    body {
+      font-family: sans-serif;
       margin: 0;
-      padding: 0;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    #controls {
       padding: 10px;
-      background: #f0f0f0;
-      border-bottom: 1px solid #ccc;
     }
-    #controls input {
-      width: 60%;
-      padding: 5px;
-    }
-    #controls button {
-      padding: 6px 12px;
-      margin-left: 8px;
-    }
-    iframe {
-      flex: 1;
+    #viewer {
       width: 100%;
+      height: 80vh;
       border: none;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div id="controls">
-    <input type="text" id="fileUrl" placeholder="輸入檔案的完整 URL">
-    <button onclick="loadDocument()">載入文件</button>
-  </div>
-  
-  <iframe id="editor"
-    src=""
-    allowfullscreen
-    webkitallowfullscreen
-    mozallowfullscreen>
-  </iframe>
+  <h2>Collabora 測試檔案開啟</h2>
+  <input type="text" id="fileUrl" placeholder="輸入檔案 URL，例如 https://example.com/test.docx" style="width:80%">
+  <button onclick="openFile()">開啟</button>
+
+  <iframe id="viewer"></iframe>
 
   <script>
-    function loadDocument() {
-      const fileUrl = document.getElementById("fileUrl").value.trim();
-      if (fileUrl) {
-        // 修改成你的 Collabora 服務 URL
-        const collaboraServer = "http://localhost:9980";
-        const editorIframe = document.getElementById("editor");
-        editorIframe.src = `${collaboraServer}/loleaflet/dist/loleaflet.html?file_path=${encodeURIComponent(fileUrl)}`;
-      } else {
-        alert("請輸入檔案 URL！");
+    function openFile() {
+      const url = document.getElementById('fileUrl').value.trim();
+      if (!url) {
+        alert("請輸入檔案 URL");
+        return;
       }
+      // 直接用 Collabora leaflet 開啟
+      const collaboraUrl = `http://localhost:9980/loleaflet/dist/loleaflet.html?file_path=${encodeURIComponent(url)}`;
+      document.getElementById('viewer').src = collaboraUrl;
     }
   </script>
 </body>
